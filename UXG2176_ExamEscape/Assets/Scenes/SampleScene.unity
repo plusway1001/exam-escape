@@ -251,9 +251,13 @@ MonoBehaviour:
   upperLookLimit: -30
   lowerLookLimit: 30
   canPitch: 1
-  moveSpeed: 1
+  walkSpeed: 3
+  runSpeed: 6
+  crouchSpeed: 1.5
   jumpHeight: 1
   gravity: -9.81
+  crouchHeight: 1
+  crouchTransitionSpeed: 10
 --- !u!143 &184158884
 CharacterController:
   m_ObjectHideFlags: 0
