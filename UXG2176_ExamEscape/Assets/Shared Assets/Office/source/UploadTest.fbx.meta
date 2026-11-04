@@ -3,7 +3,32 @@ guid: 9f178f3fdbe1be644a97959911d02aa8
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Borders Metal
+    second: {fileID: 2100000, guid: 2b1ead7ec0b781a4383f0cbcfd720678, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Borders Wood
+    second: {fileID: 2100000, guid: d4cd7ef4e7866b345b1ddab4885731c5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Carton Box
+    second: {fileID: 2100000, guid: 43bc860da832fc049868dae5cf578c79, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Floor
+    second: {fileID: 2100000, guid: d9ef12cd05625e74db0cdf6a47c75070, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: OfficeSet3
+    second: {fileID: 2100000, guid: b18a91c068fe94f4389658314e9ada3a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
