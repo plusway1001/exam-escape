@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 3189680329628436893}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,10 +44,10 @@ Light:
   serializedVersion: 12
   m_Type: 0
   m_Color: {r: 0.54115236, g: 0.35657197, b: 0.93710685, a: 1}
-  m_Intensity: 3
-  m_Range: 6
-  m_SpotAngle: 35
-  m_InnerSpotAngle: 21.80208
+  m_Intensity: 5
+  m_Range: 10
+  m_SpotAngle: 40.1
+  m_InnerSpotAngle: 27
   m_CookieSize2D: {x: 0.5, y: 0.5}
   m_Shadows:
     m_Type: 0
@@ -192,6 +192,7 @@ GameObject:
   - component: {fileID: 4674701406910630088}
   - component: {fileID: 4479482578512083170}
   - component: {fileID: 7031877470954169970}
+  - component: {fileID: 6281924848368418713}
   m_Layer: 7
   m_Name: UVFlashlight
   m_TagString: Untagged
@@ -282,7 +283,32 @@ MonoBehaviour:
   heldRotation: {x: 95, y: 0, z: 0}
   onPickedUp:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6281924848368418713}
+        m_TargetAssemblyTypeName: Caijie.UVFlashlight, Assembly-CSharp
+        m_MethodName: Equip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6281924848368418713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8156021205250166621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d104e7344c5c18841a7a181a4311aeae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Caijie.UVFlashlight
+  uvLight: {fileID: 4987743487608094301}
 --- !u!1001 &4180724417433025726
 PrefabInstance:
   m_ObjectHideFlags: 0
