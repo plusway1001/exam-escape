@@ -1,16 +1,18 @@
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+namespace Caijie
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    // Temporary placeholder
+    public class LevelManager : MonoBehaviour
     {
-        
-    }
+        public static LevelManager Instance { get; private set; }
+        public static bool IsPlaying => true;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+
+        //will do later
+
+        //public void AddTime(float seconds) { }
+        //public void ReportProgress(int done, int total) { }
+        //public void CompleteLevel() { }
     }
 }
