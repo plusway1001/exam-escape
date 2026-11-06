@@ -6,7 +6,7 @@ using UnityEngine;
 public class HUDController : MonoBehaviour
 {
     [Header("Sources")]
-    [SerializeField] private GameManager gameManager;
+    [SerializeField] private LevelManager_Marco gameManager;
     [SerializeField] private GameTimer timer;
     [SerializeField] private SortingPuzzle puzzle;
     [SerializeField] private PlayerInteractor interactor;
