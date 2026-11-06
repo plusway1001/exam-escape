@@ -27,6 +27,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private string pauseActionName = "Cancel";
     [Tooltip("Must be added to File > Build Profiles > Scene List.")]
     [SerializeField] private string mainMenuSceneName = "MainMenu";
+    [SerializeField] private string nextStageSceneName = "Stage2";
 
     public bool IsPaused { get; private set; }
 
@@ -85,6 +86,15 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         SceneManager.LoadScene(mainMenuSceneName);
+    }
+
+    public void NextStage()
+    {
+        IsPaused = false;
+        Time.timeScale = 1f;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        SceneManager.LoadScene(nextStageSceneName);
     }
 
     // ---------- Internals ----------
