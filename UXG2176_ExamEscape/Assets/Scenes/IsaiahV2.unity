@@ -172,7 +172,24 @@ PrefabInstance:
       value: Office
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1799302690885593262, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 3114104907107096849, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 2718743610168429050, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 6226716276851813713, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 1308985342186427812, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 2753179300157541774, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 8675698157380539286, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 7513085735332602694, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 448561249856201366, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 2967566329040425259, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 5539375898583920555, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 4411194114151959891, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 5775623431662155634, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 7637353646944506083, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 866676078544304839, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 5004914995261311488, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 4688624302789877220, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
