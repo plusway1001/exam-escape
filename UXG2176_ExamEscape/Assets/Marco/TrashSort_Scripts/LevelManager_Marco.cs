@@ -8,7 +8,7 @@ public enum GameState { Playing, Won, Lost }
 /// The only script that knows the rules of the whole level. It wires the other systems together:
 /// wrong submission -> time penalty, puzzle solved -> stop timer + unlock door, timer 0 -> game over.
 /// </summary>
-public class GameManager : MonoBehaviour
+public class LevelManager_Marco : MonoBehaviour
 {
     [Header("Systems")]
     [SerializeField] private GameTimer timer;
