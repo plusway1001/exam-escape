@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Shows the clue panel (the required sorting order). While open, player scripts are switched
 /// off and the cursor is freed. The timer keeps running, so reading costs time.
-/// Close with E, Escape or the Close button (wire the button's OnClick to Close()).
+/// Close with E or the Close button (wire the button's OnClick to Close()).
+/// Escape is owned by PauseMenu, which calls Close() when this panel is open.
 ///
 /// IMPORTANT: put this script on a different object from the panel (e.g. the Canvas),
 /// because the panel gets deactivated.
@@ -14,7 +15,7 @@ using UnityEngine.InputSystem;
 public class ClueViewer : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameManager gameManager;
+    [SerializeField] private LevelManager_Marco gameManager;
     [SerializeField] private SortingPuzzle puzzle;
     [SerializeField] private GameObject panel;
     [SerializeField] private TMP_Text clueText;
@@ -22,21 +23,19 @@ public class ClueViewer : MonoBehaviour
     [Tooltip("Player scripts to switch off while reading (BasicMovement, PlayerInteractor).")]
     [SerializeField] private Behaviour[] disableWhileOpen;
 
-    [Header("Input action names that close the panel")]
-    [SerializeField] private string[] closeActionNames = { "Interact", "Cancel" };
+    [Header("Input")]
+    [SerializeField] private string closeActionName = "Interact";
 
     public bool IsOpen { get; private set; }
 
     private readonly StringBuilder builder = new();
-    private InputAction[] closeActions;
+    private InputAction closeAction;
     private int openedFrame = -1;
     private int closedFrame = -1;
 
     private void Awake()
     {
-        closeActions = new InputAction[closeActionNames.Length];
-        for (int i = 0; i < closeActionNames.Length; i++)
-            closeActions[i] = InputSystem.actions.FindAction(closeActionNames[i]);
+        closeAction = InputSystem.actions.FindAction(closeActionName, true);
 
         panel.SetActive(false);
     }
@@ -49,14 +48,7 @@ public class ClueViewer : MonoBehaviour
         // Skip the frame we opened on, otherwise the same E press would close it instantly.
         if (!IsOpen || Time.frameCount == openedFrame) return;
 
-        foreach (var action in closeActions)
-        {
-            if (action != null && action.WasPressedThisFrame())
-            {
-                Close();
-                return;
-            }
-        }
+        if (closeAction.WasPressedThisFrame()) Close();
     }
 
     public void Open()
@@ -80,7 +72,7 @@ public class ClueViewer : MonoBehaviour
         closedFrame = Time.frameCount;
         panel.SetActive(false);
 
-        // If the game ended while reading, GameManager already owns the player/cursor state.
+        // If the game ended while reading, LevelManager_Marco already owns the player/cursor state.
         if (gameManager.State == GameState.Playing) SetPlayerControl(true);
     }
 
@@ -107,9 +99,9 @@ public class ClueViewer : MonoBehaviour
         {
             string label = $"{i + 1}. {puzzle.Sequence[i]}";
 
-            if (i < puzzle.Progress)       builder.Append("<color=#55FF55><s>").Append(label).AppendLine("</s></color>"); // done
+            if (i < puzzle.Progress) builder.Append("<color=#55FF55><s>").Append(label).AppendLine("</s></color>"); // done
             else if (i == puzzle.Progress) builder.Append("<b><color=#FFD84D>").Append(label).AppendLine("</color></b>"); // next
-            else                           builder.AppendLine(label);
+            else builder.AppendLine(label);
         }
 
         return builder.ToString();
