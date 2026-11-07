@@ -56,6 +56,8 @@ public class PlayerInteractor : MonoBehaviour
         }
 
         throwAction = InputSystem.actions.FindAction(throwActionName, true);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void OnDestroy()
