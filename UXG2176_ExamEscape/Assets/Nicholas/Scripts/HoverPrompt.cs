@@ -27,11 +27,13 @@ public class HoverPrompt : MonoBehaviour
 
         KeyItem key = null;
         Lock lk = null;
+        Keypad kp = null;
 
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, interactRange, ~0, QueryTriggerInteraction.Ignore))
         {
             key = hit.collider.GetComponentInParent<KeyItem>();
             lk = hit.collider.GetComponentInParent<Lock>();
+            kp = hit.collider.GetComponentInParent<Keypad>();
         }
 
         if (key != null)
@@ -56,8 +58,12 @@ public class HoverPrompt : MonoBehaviour
         {
             sb.AppendLine(inventory.Has(lk.RequiredKeyId)
                 ? "<size=70%>[E] Unlock</size>"
-                : "<size=70%><color=#FF6666>Locked</color></size>");
+                : "<size=70%><color=#FF6666>Locked (Drawer key required)</color></size>");
         }
+        else if (kp != null && !kp.IsUnlocked)
+            sb.AppendLine(kp.CanUse(inventory)
+                ? "<size=70%>[E] Enter code</size>"
+                : "<size=70%><color=#FF6666>Locked (Keycard required)</color></size>");
 
         label.text = sb.ToString();
     }

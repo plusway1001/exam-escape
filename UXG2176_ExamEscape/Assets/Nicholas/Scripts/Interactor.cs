@@ -26,5 +26,12 @@ public class Interactor : MonoBehaviour
         {
             l.TryUnlock(inventory);
         }
+        else if (hit.collider.GetComponentInParent<Keypad>() is Keypad cl && !cl.IsUnlocked)
+        {
+            if (cl.CanUse(inventory))
+            {
+                KeypadUI.Instance.Open(cl);
+            }
+        }
     }
 }
