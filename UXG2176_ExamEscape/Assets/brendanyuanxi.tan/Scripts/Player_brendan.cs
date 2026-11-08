@@ -2,18 +2,21 @@ using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Player_brendan : MonoBehaviour
 {
-    public float maxDistance = 2f;
-    public float ryacastYOffset = 0.5f;
+    [HideInInspector] public float maxDistance = 2f;
+    [HideInInspector] public float ryacastYOffset = 0.5f;
+
     public GameObject interactUI;
     public GameObject placementUI;
+    public GameObject crosshair;
 
     public GameObject holdItem;
-    public bool isHolding = false;
+    [HideInInspector] public bool isHolding = false;
 
-    public GameObject officePrefab;
+    [HideInInspector] public GameObject officePrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +30,11 @@ public class Player_brendan : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+
+    private void FixedUpdate()
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y + ryacastYOffset, transform.position.z);
         Vector3 direction = transform.GetChild(0).forward;
@@ -44,6 +52,7 @@ public class Player_brendan : MonoBehaviour
             {
                 //Debug.Log("Interact with object");
                 interactUI.SetActive(true);
+                crosshair.GetComponent<RawImage>().color = Color.red;
 
                 //Debug.Log(gameObject.name);
 
@@ -51,7 +60,7 @@ public class Player_brendan : MonoBehaviour
                 {
                     gameObject.transform.SetParent(holdItem.transform, false);
                     gameObject.transform.position = holdItem.transform.position;
-                    
+
 
                     isHolding = true;
 
@@ -61,6 +70,8 @@ public class Player_brendan : MonoBehaviour
             else if (gameObject.CompareTag("Target") && isHolding)
             {
                 placementUI.SetActive(true);
+                crosshair.GetComponent<RawImage>().color = Color.green;
+
 
                 if (Keyboard.current.fKey.isPressed)
                 {
@@ -81,17 +92,17 @@ public class Player_brendan : MonoBehaviour
                 }
             }
 
-            
+
         }
-         
+
         //If raycast doesn't hit anything
         else
         {
             //Disable the interact UI prompt
             interactUI.SetActive(false);
             placementUI.SetActive(false);
+            crosshair.GetComponent<RawImage>().color = Color.black;
+
         }
-
-
     }
 }

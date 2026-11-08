@@ -26,4 +26,9 @@ public class TargetObjects_brendan : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.gameObject.name);
+    }
+
 }
