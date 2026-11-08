@@ -1,36 +1,22 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Interactor : MonoBehaviour
+namespace Nicholas
 {
-    [SerializeField] private Inventory inventory;
-    [SerializeField] private float range = 3f;
-
-    private void Update()
+    public class Interactor : MonoBehaviour
     {
-        if (!Keyboard.current.eKey.wasPressedThisFrame)
-        {
-            return;
-        }
-        if (!Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range))
-        {
-            return;
-        }
+        [SerializeField] private PlayerSelect select;
+        [SerializeField] private Inventory inventory;
 
-        if (hit.collider.GetComponentInParent<KeyItem>() is KeyItem key)
+        private void Update()
         {
-            inventory.Add(key.keyId);
-            Destroy(key.gameObject);
-        }
-        else if (hit.collider.GetComponentInParent<Lock>() is Lock l)
-        {
-            l.TryUnlock(inventory);
-        }
-        else if (hit.collider.GetComponentInParent<Keypad>() is Keypad cl && !cl.IsUnlocked)
-        {
-            if (cl.CanUse(inventory))
+            if (InputBlocker.InputBlocked)
             {
-                KeypadUI.Instance.Open(cl);
+                return;
+            }
+            if (Keyboard.current[select.Config.interactKey].wasPressedThisFrame && select.Interactable != null)
+            {
+                select.Interactable.Interact(inventory);
             }
         }
     }

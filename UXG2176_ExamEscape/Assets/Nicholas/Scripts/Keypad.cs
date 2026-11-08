@@ -1,29 +1,62 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Keypad : MonoBehaviour
+namespace Nicholas
 {
-    [SerializeField] private string code = "1459";
-    public UnityEvent onUnlocked;
-
-    [SerializeField] private string requiredKeyId = "door_keycard";
-    public bool CanUse(Inventory inv) => string.IsNullOrEmpty(requiredKeyId) || inv.Has(requiredKeyId);
-
-    public bool IsUnlocked { get; private set; }
-
-    public bool Check(string attempt)
+    public class Keypad : Interactable
     {
-        if (IsUnlocked)
+        [SerializeField] private string code = "1459";
+        [SerializeField] private ItemData requiredItem;
+        [SerializeField] private string enterText = "Enter code";
+        [SerializeField] private string lockedText = "Locked";
+        public UnityEvent onUnlocked;
+
+        public bool IsUnlocked { get; private set; }
+        public int CodeLength => code.Length;
+
+        [SerializeField] private bool consumeItem = true;
+
+        private Inventory user;
+
+        public bool Check(string attempt)
         {
+            if (IsUnlocked)
+            {
+                return true;
+            }
+            if (attempt != code)
+            {
+                return false;
+            }
+            IsUnlocked = true;
+            if (consumeItem && user != null)
+            {
+                user.Remove(requiredItem);
+            }
+            onUnlocked.Invoke();
             return true;
         }
-        if (attempt != code)
+
+        public override InteractState GetState(Inventory inv, out string text)
         {
-            return false;
+            if (IsUnlocked)
+            {
+                text = null;
+                return InteractState.Hidden;
+            }
+            bool ok = inv.Has(requiredItem);
+            text = ok ? enterText : lockedText;
+            return ok ? InteractState.Available : InteractState.Blocked;
         }
 
-        IsUnlocked = true;
-        onUnlocked.Invoke();
-        return true;
+        public override void Interact(Inventory inv)
+        {
+            if (IsUnlocked || !inv.Has(requiredItem))
+            {
+                return;
+            }
+            user = inv;
+            KeypadUI.Instance.Open(this);
+        }
     }
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Nicholas;
 
 [RequireComponent(typeof(CharacterController))]
 public class BasicMovement : MonoBehaviour
@@ -50,9 +51,12 @@ public class BasicMovement : MonoBehaviour
 
     void Update()
     {
-        HandleCrouch();
-        HandleMovement();
-        HandleLook();
+        if (InputBlocker.InputBlocked)
+        {
+            HandleCrouch();
+            HandleMovement();
+            HandleLook();
+        }
     }
 
     void HandleCrouch()

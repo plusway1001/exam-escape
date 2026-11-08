@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e588d77f03525d47a264187b127be12, type: 3}
+  m_Name: NicholasConfig
+  m_EditorClassIdentifier: Assembly-CSharp::NicholasConfig
+  aimRange: 8
+  interactRange: 3
+  swapRadius: 3
+  blockerMask:
+    serializedVersion: 2
+    m_Bits: 769
+  interactMask:
+    serializedVersion: 2
+    m_Bits: 901
+  interactKey: 19
+  inRangeColor: {r: 0, g: 1, b: 0, a: 1}
+  hoverColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  selectedColor: {r: 1, g: 1, b: 1, a: 1}
+  swapPrompt: '[Click] Swap'
+  actionFormat: <size=70%><color=#{0}>{1}</color></size>
+  swapPromptColor: {r: 0.33, g: 1, b: 0.33, a: 1}
+  availablePromptColor: {r: 1, g: 1, b: 1, a: 1}
+  blockedPromptColor: {r: 1, g: 0.4, b: 0.4, a: 1}

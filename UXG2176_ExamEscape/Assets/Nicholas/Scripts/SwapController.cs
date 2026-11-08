@@ -2,176 +2,148 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SwapController : MonoBehaviour
+namespace Nicholas
 {
-    [SerializeField] private float range = 6f;
-    [SerializeField] private LayerMask blockerMask = ~0;
-
-    private Swappable first;
-    private Swappable hovered;
-
-    [SerializeField] private Material rangeSphereMaterial;
-
-    private Transform rangeSphere;
-
-    [SerializeField] private Color inRangeColor = Color.green;
-    [SerializeField] private Color hoverColor = Color.yellow;
-    [SerializeField] private Color selectedColor = Color.white;
-
-    private readonly List<Swappable> inRange = new();
-
-    private void Awake()
+    [RequireComponent(typeof(PlayerSelect))]
+    public class SwapController : MonoBehaviour
     {
-        GameObject s = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        Destroy(s.GetComponent<Collider>());
-        s.GetComponent<Renderer>().sharedMaterial = rangeSphereMaterial;
-        s.transform.localScale = Vector3.one * range * 2f;
-        s.SetActive(false);
-        rangeSphere = s.transform;
-    }
+        [SerializeField] private Material rangeSphereMaterial;
 
-    private void Update()
-    {
-        UpdateHover();
+        private PlayerSelect select;
+        private GameConfig Cfg => select.Config;
 
-        if (Mouse.current.leftButton.wasPressedThisFrame)
-        {
-            Select();
-        }
-        if (Mouse.current.rightButton.wasPressedThisFrame)
-        {
-            ClearSelection();
-        }
-    }
+        private Swappable first, hovered;
+        private readonly List<Swappable> inRange = new();
+        private Transform rangeSphere;
 
-    private void Select()
-    {
-        Ray ray = new Ray(transform.position, transform.forward);
-        if (!Physics.Raycast(ray, out RaycastHit hit, range, blockerMask))
+        private void Awake()
         {
-            return;
+            select = GetComponent<PlayerSelect>();
+
+            GameObject s = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            Destroy(s.GetComponent<Collider>());
+            s.GetComponent<Renderer>().sharedMaterial = rangeSphereMaterial;
+            s.SetActive(false);
+            rangeSphere = s.transform;
         }
 
-        Swappable target = hit.collider.GetComponentInParent<Swappable>();
-
-        if (target == null)
+        private void Update()
         {
-            return;
+            UpdateHover();
+            if (!InputBlocker.InputBlocked && Mouse.current.leftButton.wasPressedThisFrame)
+            {
+                TrySelect();
+            }
         }
 
-        if (target == first)
+        private void UpdateHover()
         {
-            ClearSelection();
-        }
-
-        if (first == null)
-        {
-            first = target;
-            ShowRange(first);
-            Refresh(first);
-        }
-        else
-        {
-            if (!InRange(first, target))
+            Swappable target = select.Swappable;
+            if (target == hovered)
             {
                 return;
             }
-            Swap(first, target);
-            ClearSelection();
-        }
-    }
 
-    private void Refresh(Swappable s)
-    {
-        if (s == null) return;
-
-        Color? c = null;
-        if (s == first)
-        {
-            c = selectedColor;
-        }
-        else if (s == hovered)
-        {
-            c = hoverColor;
-        }
-        else if (first != null && inRange.Contains(s))
-        {
-            c = inRangeColor;
+            Swappable prev = hovered;
+            hovered = target;
+            Refresh(prev);
+            Refresh(hovered);
         }
 
-        s.SetColor(c);
-    }
-
-    private void Swap(Swappable a, Swappable b)
-    {
-        Bounds ba = a.GetBounds();
-        Bounds bb = b.GetBounds();
-
-        Vector3 aBase = new Vector3(ba.center.x, ba.min.y, ba.center.z);
-        Vector3 bBase = new Vector3(bb.center.x, bb.min.y, bb.center.z);
-
-        a.transform.position += bBase - aBase;
-        b.transform.position += aBase - bBase;
-    }
-
-    private void ClearSelection()
-    {
-        Swappable old = first;
-        first = null;
-        HideRange();
-        Refresh(old);
-    }
-
-    private void UpdateHover()
-    {
-        Swappable target = null;
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range, blockerMask, QueryTriggerInteraction.Ignore))
+        private void TrySelect()
         {
-            target = hit.collider.GetComponentInParent<Swappable>();
-        }
-
-        if (target == hovered)
-        {
-            return;
-        }
-
-        Swappable prev = hovered;
-        hovered = target;
-        Refresh(prev);
-        Refresh(hovered);
-    }
-
-    private void ShowRange(Swappable target)
-    {
-        rangeSphere.position = target.GetBounds().center;
-        rangeSphere.gameObject.SetActive(true);
-
-        inRange.Clear();
-        foreach (Swappable s in Swappable.All)
-        {
-            if (s != target && InRange(target, s))
+            Swappable target = select.Swappable;
+            if (target == null)
             {
-                inRange.Add(s);
+                return;
+            }
+
+            if (target == first)
+            {
+                ClearSelection();
+                return;
+            }
+
+            if (first == null)
+            {
+                first = target;
+                ShowRange(first);
+                Refresh(first);
+            }
+            else if (InRange(first, target))
+            {
+                Swap(first, target);
+                ClearSelection();
             }
         }
 
-        foreach (Swappable s in inRange)
+        private void Refresh(Swappable s)
         {
-            Refresh(s);
+            if (s == null)
+            {
+                return;
+            }
+
+            Color? c = null;
+            if (s == first)
+            {
+                c = Cfg.selectedColor;
+            }
+            else if (s == hovered)
+            {
+                c = Cfg.hoverColor;
+            }
+            else if (first != null && inRange.Contains(s))
+            {
+                c = Cfg.inRangeColor;
+            }
+
+            s.SetColor(c);
         }
-    }
 
-    private void HideRange()
-    {
-        rangeSphere.gameObject.SetActive(false);
+        private bool InRange(Swappable a, Swappable b) => Vector3.Distance(a.GetBounds().center, b.GetBounds().center) <= Cfg.swapRadius;
 
-        var old = new List<Swappable>(inRange);
-        inRange.Clear();
-        foreach (Swappable s in old) Refresh(s);
-    }
+        private void ShowRange(Swappable target)
+        {
+            rangeSphere.position = target.GetBounds().center;
+            rangeSphere.localScale = Vector3.one * Cfg.swapRadius * 2f;
+            rangeSphere.gameObject.SetActive(true);
 
-    private bool InRange(Swappable a, Swappable b)
-    {
-        return Vector3.Distance(a.GetBounds().center, b.GetBounds().center) <= range;
+            inRange.Clear();
+            foreach (Swappable s in Swappable.All)
+            {
+                if (s != target && InRange(target, s))
+                {
+                    inRange.Add(s);
+                }
+            }
+            foreach (Swappable s in inRange)
+            {
+                Refresh(s);
+            }
+        }
+
+        private void ClearSelection()
+        {
+            Swappable old = first;
+            first = null;
+
+            rangeSphere.gameObject.SetActive(false);
+            var previous = new List<Swappable>(inRange);
+            inRange.Clear();
+            foreach (Swappable s in previous) Refresh(s);
+            Refresh(old);
+        }
+
+        private void Swap(Swappable a, Swappable b)
+        {
+            Bounds ba = a.GetBounds(), bb = b.GetBounds();
+            Vector3 aBase = new Vector3(ba.center.x, ba.min.y, ba.center.z);
+            Vector3 bBase = new Vector3(bb.center.x, bb.min.y, bb.center.z);
+            a.transform.position += bBase - aBase;
+            b.transform.position += aBase - bBase;
+
+            Swappable.NotifySwapped(a, b);
+        }
     }
 }

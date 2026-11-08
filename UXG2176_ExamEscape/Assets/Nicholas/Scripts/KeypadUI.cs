@@ -2,79 +2,85 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class KeypadUI : MonoBehaviour
+namespace Nicholas
 {
-    public static KeypadUI Instance { get; private set; }
-
-    [SerializeField] private GameObject panel;
-    [SerializeField] private TMP_InputField input;
-    [SerializeField] private TMP_Text feedback;
-
-    [SerializeField] private Behaviour[] disableWhileOpen;
-
-    private Keypad current;
-
-    public bool IsOpen => panel.activeSelf;
-
-    private void Awake()
+    public class KeypadUI : MonoBehaviour
     {
-        Instance = this;
-        input.characterValidation = TMP_InputField.CharacterValidation.Digit;
-        panel.SetActive(false);
-    }
+        public static KeypadUI Instance { get; private set; }
 
-    private void Update()
-    {
-        if (!IsOpen) return;
-        if (Keyboard.current.escapeKey.wasPressedThisFrame) Close();
-        if (Keyboard.current.enterKey.wasPressedThisFrame) Submit();
-    }
+        [SerializeField] private GameObject panel;
+        [SerializeField] private TMP_InputField input;
+        [SerializeField] private TMP_Text feedback;
 
-    public void Open(Keypad lockToOpen)
-    {
-        current = lockToOpen;
-        input.text = "";
-        feedback.text = "";
-        panel.SetActive(true);
+        private Keypad current;
 
-        SetPlayerControl(false);
-        input.ActivateInputField();
-    }
+        [SerializeField] private Key closeKey = Key.Escape;
+        [SerializeField] private Key submitKey = Key.Enter;
 
-    public void Close()
-    {
-        panel.SetActive(false);
-        current = null;
-        SetPlayerControl(true);
-    }
+        public bool IsOpen => panel.activeSelf;
 
-    public void Submit()
-    {
-        if (current == null) return;
-
-        if (current.Check(input.text))
+        private void Awake()
         {
-            Close();
+            Instance = this;
+            input.characterValidation = TMP_InputField.CharacterValidation.Digit;
+            panel.SetActive(false);
         }
-        else
+
+        private void Update()
         {
-            feedback.text = "<color=#FF6666>Wrong code. Try again.</color>";
+            if (!IsOpen)
+            {
+                return;
+            }
+            if (Keyboard.current[closeKey].wasPressedThisFrame)
+            {
+                Close();
+            }
+            if (Keyboard.current[submitKey].wasPressedThisFrame)
+            {
+                Submit();
+            }
+        }
+
+        public void Open(Keypad lockToOpen)
+        {
+            current = lockToOpen;
             input.text = "";
+            feedback.text = "";
+            panel.SetActive(true);
+            InputBlocker.SetInputBlocked(true);
             input.ActivateInputField();
         }
-    }
 
-    public void Backspace()
-    {
-        if (input.text.Length > 0)
-            input.text = input.text.Substring(0, input.text.Length - 1);
-    }
+        public void Close()
+        {
+            panel.SetActive(false);
+            current = null;
+            InputBlocker.SetInputBlocked(false);
+        }
 
-    private void SetPlayerControl(bool enabled)
-    {
-        foreach (Behaviour b in disableWhileOpen) b.enabled = enabled;
+        public void Submit()
+        {
+            if (current == null) return;
 
-        Cursor.lockState = enabled ? CursorLockMode.Locked : CursorLockMode.None;
-        Cursor.visible = !enabled;
+            if (current.Check(input.text))
+            {
+                Close();
+            }
+            else
+            {
+                feedback.text = "<color=#FF6666>Wrong code. Try again.</color>";
+                input.text = "";
+                input.ActivateInputField();
+            }
+        }
+
+        public void Backspace()
+        {
+            if (input.text.Length > 0)
+            {
+                input.text = input.text.Substring(0, input.text.Length - 1);
+            }
+        }
     }
 }

@@ -1,24 +1,42 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Lock : MonoBehaviour
+namespace Nicholas
 {
-    [SerializeField] private string requiredKeyId;
-    public UnityEvent onUnlocked;
-
-    private bool unlocked;
-
-    public bool IsUnlocked => unlocked;
-    public string RequiredKeyId => requiredKeyId;
-
-    public bool TryUnlock(Inventory inv)
+    public class Lock : Interactable
     {
-        if (unlocked || !inv.Has(requiredKeyId))
+        [SerializeField] private ItemData requiredItem;
+        [SerializeField] private string unlockText = "Unlock";
+        [SerializeField] private string lockedText = "Locked";
+        [SerializeField] private bool consumeItem = true;
+
+        public UnityEvent onUnlocked;
+
+        private bool unlocked;
+
+        public override InteractState GetState(Inventory inv, out string text)
         {
-            return false;
+            if (unlocked)
+            {
+                text = null; return InteractState.Hidden;
+            }
+            bool hasItem = inv.Has(requiredItem);
+            text = hasItem ? unlockText : lockedText;
+            return hasItem ? InteractState.Available : InteractState.Blocked;
         }
-        unlocked = true;
-        onUnlocked.Invoke();
-        return true;
+
+        public override void Interact(Inventory inv)
+        {
+            if (unlocked || !inv.Has(requiredItem))
+            {
+                return;
+            }
+            unlocked = true;
+            if (consumeItem)
+            {
+                inv.Remove(requiredItem);
+            }
+            onUnlocked.Invoke();
+        }
     }
 }

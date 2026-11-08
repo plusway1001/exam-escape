@@ -2,69 +2,60 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 
-public class HoverPrompt : MonoBehaviour
+namespace Nicholas
 {
-    [SerializeField] private TMP_Text label;
-    [SerializeField] private Inventory inventory;
-
-    [SerializeField] private float swapRange = 8f;
-    [SerializeField] private float interactRange = 3f;
-
-    [SerializeField] private LayerMask blockerMask = ~0;
-
-    private readonly StringBuilder sb = new();
-
-    private void Update()
+    public class HoverPrompt : MonoBehaviour
     {
-        sb.Clear();
+        [SerializeField] private PlayerSelect select;
+        [SerializeField] private Inventory inventory;
+        [SerializeField] private TMP_Text label;
 
-        Swappable swappable = null;
+        private readonly StringBuilder sb = new();
 
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit swapHit, swapRange, blockerMask, QueryTriggerInteraction.Ignore))
+        private void Update()
         {
-            swappable = swapHit.collider.GetComponentInParent<Swappable>();
+            sb.Clear();
+            GameConfig cfg = select.Config;
+            Swappable swappable = select.Swappable;
+            Interactable interactable = select.Interactable;
+
+            InteractState state = InteractState.Hidden;
+            string text = null;
+            if (interactable != null)
+            {
+                state = interactable.GetState(inventory, out text);
+            }
+            bool showInteract = state != InteractState.Hidden;
+
+            if (showInteract)
+            {
+                sb.AppendLine(interactable.DisplayName);
+            }
+            else if (swappable != null)
+            {
+                sb.AppendLine(swappable.DisplayName);
+            }
+
+            if (swappable != null)
+            {
+                Action(cfg.swapPromptColor, cfg.swapPrompt);
+            }
+
+            if (state == InteractState.Available)
+            {
+                Action(cfg.availablePromptColor, $"[{cfg.interactKey}] {text}");
+            }
+            else if (state == InteractState.Blocked)
+            {
+                Action(cfg.blockedPromptColor, text);
+            }
+
+            label.text = sb.ToString();
         }
 
-        KeyItem key = null;
-        Lock lk = null;
-        Keypad kp = null;
-
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, interactRange, ~0, QueryTriggerInteraction.Ignore))
+        private void Action(Color color, string text)
         {
-            key = hit.collider.GetComponentInParent<KeyItem>();
-            lk = hit.collider.GetComponentInParent<Lock>();
-            kp = hit.collider.GetComponentInParent<Keypad>();
+            sb.AppendLine(string.Format(select.Config.actionFormat, ColorUtility.ToHtmlStringRGB(color), text));
         }
-
-        if (key != null)
-        {
-            sb.AppendLine(key.DisplayName);
-        }
-        else if (swappable != null)
-        {
-            sb.AppendLine(swappable.DisplayName);
-        }
-
-        if (swappable != null)
-        {
-            sb.AppendLine("<size=70%><color=#55FF55>[Click] Swap</color></size>");
-        }
-
-        if (key != null)
-        {
-            sb.AppendLine("<size=70%>[E] Pick up</size>");
-        }
-        else if (lk != null && !lk.IsUnlocked)
-        {
-            sb.AppendLine(inventory.Has(lk.RequiredKeyId)
-                ? "<size=70%>[E] Unlock</size>"
-                : "<size=70%><color=#FF6666>Locked (Drawer key required)</color></size>");
-        }
-        else if (kp != null && !kp.IsUnlocked)
-            sb.AppendLine(kp.CanUse(inventory)
-                ? "<size=70%>[E] Enter code</size>"
-                : "<size=70%><color=#FF6666>Locked (Keycard required)</color></size>");
-
-        label.text = sb.ToString();
     }
 }
