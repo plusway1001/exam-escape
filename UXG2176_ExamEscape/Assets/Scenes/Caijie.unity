@@ -333,6 +333,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8071739726602281741, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8556442441904808890, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.19405
@@ -378,7 +382,17 @@ PrefabInstance:
       value: Office
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4095147474197874735, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 3698923637238352614, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 1638376435987714542, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 8525783321187279126, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 92337346678678246, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 3942485287141707644, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 3411875106849981749, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 439961976292198180, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 6977769425307945789, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+    - {fileID: 9142145294159869618, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
@@ -3748,6 +3762,22 @@ PrefabInstance:
     - target: {fileID: 6281924848368418713, guid: 96ef972fba73f524f8c3b94c033fffba, type: 3}
       propertyPath: occluderMask.m_Bits
       value: 183
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031877470954169970, guid: 96ef972fba73f524f8c3b94c033fffba, type: 3}
+      propertyPath: heldPosition.y
+      value: 0.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031877470954169970, guid: 96ef972fba73f524f8c3b94c033fffba, type: 3}
+      propertyPath: heldRotation.x
+      value: 88
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031877470954169970, guid: 96ef972fba73f524f8c3b94c033fffba, type: 3}
+      propertyPath: heldRotation.y
+      value: -0.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 7031877470954169970, guid: 96ef972fba73f524f8c3b94c033fffba, type: 3}
+      propertyPath: heldRotation.z
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8156021205250166621, guid: 96ef972fba73f524f8c3b94c033fffba, type: 3}
       propertyPath: m_Name
