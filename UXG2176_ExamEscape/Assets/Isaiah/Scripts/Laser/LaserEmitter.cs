@@ -12,8 +12,10 @@ namespace Isaiah
         [SerializeField] private int maxBounces = 10;
         [SerializeField] private LayerMask hitMask = ~0;
         [SerializeField] private bool startOn = true;
+        [SerializeField] private bool passThroughCharacters = true;
 
         private const float SurfaceOffset = 0.01f;
+        private const int MaxPassThroughs = 4;
 
         private LineRenderer line;
         private Vector3[] points;
@@ -60,12 +62,29 @@ namespace Isaiah
 
             AddPoint(origin);
 
-            for (int bounce = 0; bounce <= maxBounces; bounce++)
+            int bounces = 0;
+            int passes = 0;
+
+            while (bounces <= maxBounces)
             {
+                if (remaining <= 0f)
+                {
+                    AddPoint(origin);
+                    return;
+                }
+
                 if (!Physics.Raycast(origin, direction, out RaycastHit hit, remaining, hitMask, QueryTriggerInteraction.Ignore))
                 {
                     AddPoint(origin + direction * remaining);
                     return;
+                }
+
+                if (passThroughCharacters && passes < MaxPassThroughs && IsCharacter(hit.collider))
+                {
+                    passes++;
+                    remaining -= hit.distance + SurfaceOffset;
+                    origin = hit.point + direction * SurfaceOffset;
+                    continue;
                 }
 
                 AddPoint(hit.point);
@@ -84,7 +103,13 @@ namespace Isaiah
 
                 direction = Vector3.Reflect(direction, hit.normal);
                 origin = hit.point + direction * SurfaceOffset;
+                bounces++;
             }
+        }
+
+        private static bool IsCharacter(Collider col)
+        {
+            return col.GetComponentInParent<CharacterController>() != null;
         }
 
         private void AddPoint(Vector3 p)
