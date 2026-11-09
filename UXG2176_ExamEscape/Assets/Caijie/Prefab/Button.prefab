@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.4140998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.0288875
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.8390758
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
       propertyPath: m_LocalRotation.w
@@ -56,9 +56,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button
       objectReference: {fileID: 0}
+    - target: {fileID: -5943861732449413272, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -4401516710929950653, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
       propertyPath: m_Name
       value: Button_Frame
+      objectReference: {fileID: 0}
+    - target: {fileID: -4401516710929950653, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -940751433667545387, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -66,7 +74,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 37feae8f183a4f14d87f4d075f4597d4, type: 2}
     - target: {fileID: 919132149155446097, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
       propertyPath: m_Name
-      value: Buttons
+      value: Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1308987167971790318, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -82,14 +94,76 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6331513360574230096}
+      addedObject: {fileID: 5412299538671883201}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8456823710372677683}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5098649417463958280}
+    - targetCorrespondingSourceObject: {fileID: -5943861732449413272, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7498670548356187097}
   m_SourcePrefab: {fileID: 100100000, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
+--- !u!1 &215742798173159825 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -5943861732449413272, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
+  m_PrefabInstance: {fileID: 3421981252186887929}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7498670548356187097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215742798173159825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebd48459034ed57419f6444dec964c1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Caijie.ButtonPressAnimation
+  pressOffset: {x: 0, y: -0.02, z: 0}
+  pressTime: 0.2
 --- !u!1 &2574994661221886888 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
   m_PrefabInstance: {fileID: 3421981252186887929}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6331513360574230096
+--- !u!65 &5412299538671883201
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574994661221886888}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 0.3291012, z: 0.5}
+  m_Center: {x: 0, y: 0.14758351, z: 0}
+--- !u!114 &8456823710372677683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574994661221886888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb422ef20f96444eafd9b3407319f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Caijie.ButtonSequence
+  pressAnimation: {fileID: 7498670548356187097}
+--- !u!114 &5098649417463958280
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
