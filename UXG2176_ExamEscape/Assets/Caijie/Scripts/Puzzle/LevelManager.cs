@@ -11,8 +11,8 @@ namespace Caijie
 
         //will do later
 
-        //public void AddTime(float seconds) { }
-        //public void ReportProgress(int done, int total) { }
-        //public void CompleteLevel() { }
+        public void AddTime(float seconds) { }
+        public void ReportProgress(int done, int total) { }
+        public void CompleteLevel() { }
     }
 }
