@@ -29,7 +29,6 @@ namespace Caijie
         [Header("Feedback")]
         [SerializeField] private int wrongBlinks = 3;
         [SerializeField] private float blinkInterval = 0.12f;
-        [SerializeField] private float wrongTimePenalty = 10f;    // seconds taken off the timer
 
         [Header("Events")]
         public UnityEvent onCorrectPress;
@@ -39,6 +38,10 @@ namespace Caijie
         private int step;       // how many buttons are done so far
         private bool busy;      // true while the wrong-answer blink is playing
         private bool solved;
+
+        // the button counter on my HUD listens to this: how many are done, out of how many.
+        // written as System.Action because "using System;" would make Random ambiguous
+        public event System.Action<int, int> ProgressChanged;
 
         private void Awake()
         {
@@ -69,7 +72,7 @@ namespace Caijie
             // done in Start, not Awake, because the buttons read their own colours in their Awake.
             // by the time any Start runs, every Awake has finished.
             AssignClueColours();    // written in task 4
-            ReportProgress();
+            ProgressChanged?.Invoke(step, sequence.Length);
         }
 
         // runs every time any button (or decoy) is pressed
@@ -86,7 +89,7 @@ namespace Caijie
 
                 step++;
                 onCorrectPress.Invoke();
-                ReportProgress();
+                ProgressChanged?.Invoke(step, sequence.Length);
 
                 if (step == sequence.Length)
                     Solve();
@@ -102,9 +105,6 @@ namespace Caijie
         {
             busy = true;    // ignore any presses while this plays
             onWrongPress.Invoke();
-
-            if (LevelManager.Instance != null)
-                LevelManager.Instance.AddTime(-wrongTimePenalty);
 
             // only blink the buttons the player already found, so the others aren't given away
             List<UVRevealable> found = new List<UVRevealable>();
@@ -141,7 +141,7 @@ namespace Caijie
             }
 
             step = 0;
-            ReportProgress();
+            ProgressChanged?.Invoke(step, sequence.Length);
             busy = false;
         }
 
@@ -154,13 +154,6 @@ namespace Caijie
                 d.Locked = true;
 
             onSolved.Invoke();
-        }
-
-        // sends "done / total" to the LevelManager, which passes it on to the HUD (Buttons 3 / 9)
-        private void ReportProgress()
-        {
-            if (LevelManager.Instance != null)
-                LevelManager.Instance.ReportProgress(step, sequence.Length);
         }
 
         // number "1" gets the first button's colour material, "2" the second's, and so on

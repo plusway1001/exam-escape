@@ -48,7 +48,7 @@ namespace Caijie
         private void Update()
         {
             // no interacting while paused or on the win/lose screens
-            if (!LevelManager.IsPlaying)
+            if (!LevelManager_Caijie.IsPlaying)
             {
                 SetFocus(null);
                 return;

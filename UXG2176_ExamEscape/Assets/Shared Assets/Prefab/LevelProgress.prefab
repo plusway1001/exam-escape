@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5545776093191581648}
   - component: {fileID: 7591790811740907096}
   - component: {fileID: 6198641079435734279}
+  - component: {fileID: 6946157070504723382}
   m_Layer: 5
   m_Name: LevelProgress
   m_TagString: Untagged
@@ -35,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 550, y: -100}
-  m_SizeDelta: {x: 1000, y: 100}
+  m_AnchoredPosition: {x: 432, y: -100}
+  m_SizeDelta: {x: 750, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7591790811740907096
 CanvasRenderer:
@@ -60,7 +61,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -73,6 +74,19 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &6946157070504723382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2072910619237824192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d28ee97f5d3bb408d79b999a362f60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Gunnode.LevelProgress
+  progressText: {fileID: 4687080591115708098}
 --- !u!1 &9163855895245205817
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +121,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 23.549, y: 2.0806}
+  m_AnchoredPosition: {x: 138, y: -2}
   m_SizeDelta: {x: 952.9, y: 75.1611}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1635133626822700744
@@ -132,7 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -165,8 +179,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 54
-  m_fontSizeBase: 54
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

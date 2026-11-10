@@ -92,8 +92,8 @@ namespace Caijie
         {
             if (!isOpen) return;
 
-            if (other.CompareTag("Player") && LevelManager.Instance != null)
-                LevelManager.Instance.CompleteLevel();
+            if (other.CompareTag("Player") && LevelManager_Caijie.Instance != null)
+                LevelManager_Caijie.Instance.CompleteLevel();
         }
 
         // brightens the light from 0 to its Inspector value over glowTime seconds

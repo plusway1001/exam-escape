@@ -7,7 +7,7 @@ namespace Caijie
     // when picked up, it attaches itself to the player's hand and fires onPickedUp.
     public class FlashlightPickup : MonoBehaviour, IInteractable
     {
-        [SerializeField] private string prompt = "Pick up UV flashlight";
+        [SerializeField] private Sprite prompt;   // the "E | Pick up flashlight" image
 
         // where it sits in the hand
         [SerializeField] private Vector3 heldPosition = Vector3.zero;
@@ -20,7 +20,7 @@ namespace Caijie
         private bool pickedUp;
 
         //from IInteractable
-        public string Prompt => prompt;
+        public Sprite Prompt => prompt;
         public bool CanInteract => !pickedUp;   // only once
 
         public void Interact(PlayerInteractor interactor)

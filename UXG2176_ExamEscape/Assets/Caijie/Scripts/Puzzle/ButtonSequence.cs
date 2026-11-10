@@ -16,11 +16,13 @@ namespace Caijie
         // can be left empty, the button still works, it just won't move
         [SerializeField] private ButtonPressAnimation pressAnimation;
 
+        [SerializeField] private Sprite prompt;   // the "E | Press button" image
+
         public UVRevealable Revealable { get; private set; }
         public bool Locked { get; set; }
 
         // from IInteractable
-        public string Prompt => "Press button";
+        public Sprite Prompt => prompt;
         public bool CanInteract => !Locked && Revealable.IsRevealed;   // not while locked, or while blinking grey
 
         private void Awake()

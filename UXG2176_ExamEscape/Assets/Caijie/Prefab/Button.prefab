@@ -101,6 +101,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5098649417463958280}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6400407490173165962}
     - targetCorrespondingSourceObject: {fileID: -5943861732449413272, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7498670548356187097}
@@ -163,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Caijie.ButtonSequence
   pressAnimation: {fileID: 7498670548356187097}
+  prompt: {fileID: 21300000, guid: 2f36bd21d02405e4f9045d4d746abc7a, type: 3}
 --- !u!114 &5098649417463958280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +184,18 @@ MonoBehaviour:
   revealedMaterial: {fileID: 0}
   revealPoint: {fileID: 2952083910392557842}
   alwaysShowColour: 1
+--- !u!114 &6400407490173165962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2574994661221886888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5ae424294c33bb4195fafc1b4654e50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Caijie.LightUpOnPickup
 --- !u!4 &2952083910392557842 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cea91c6dae5f81749a32b7db98bccc97, type: 3}

@@ -23,7 +23,7 @@ namespace Caijie
         [SerializeField] private Material revealedMaterial;
 
         // the target point that the beam from torch has to reach
-        // if its empty, will take the object's position
+        // if its empty, will take the middle of the mesh
         [SerializeField] private Transform revealPoint;
 
         // tick on the buttons as they always show their colour without light is on them
@@ -45,6 +45,12 @@ namespace Caijie
             get
             {
                 if (revealPoint != null) return revealPoint.position;
+
+                // no point set: aim at the middle of the visible mesh, not the model's pivot.
+                // a model's pivot can sit at its corner, or inside the wall it's placed on
+                if (targetRenderers.Length > 0 && targetRenderers[0] != null)
+                    return targetRenderers[0].bounds.center;
+
                 return transform.position;
             }
         }
@@ -94,6 +100,12 @@ namespace Caijie
         public void SetBlinkOff(bool off)
         {
             blinkOff = off;
+        }
+
+        // the buttons only light up once the torch is picked up
+        public void SetAlwaysShowColour(bool on)
+        {
+            alwaysShowColour = on;
         }
 
         // puts either the colour material or Grey Base on every mesh

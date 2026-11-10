@@ -55,7 +55,7 @@ namespace Caijie
         private void Update()
         {
             // not picked up yet, or the game is paused
-            if (!equipped || !LevelManager.IsPlaying) return;
+            if (!equipped || !LevelManager_Caijie.IsPlaying) return;
 
             // F flips the light
             if (toggleAction != null && toggleAction.WasPressedThisFrame())
@@ -123,7 +123,9 @@ namespace Caijie
             // occluderMask limits it to layers that can block light
             // QueryTriggerInteraction.Ignore makes it skip trigger colliders, so invisible zones dont block the beam
             // if the ray hits something, out RaycastHit hit tells you what
-            if (Physics.Raycast(origin, dir, out RaycastHit hit, dist, occluderMask, QueryTriggerInteraction.Ignore))
+            // the ray stops 10 cm short, so a number stuck flat against a wall isn't blocked by that same wall
+            float checkDist = Mathf.Max(0f, dist - 0.1f);
+            if (Physics.Raycast(origin, dir, out RaycastHit hit, checkDist, occluderMask, QueryTriggerInteraction.Ignore))
             {
                 // if something was hit, fine only if it's the target itself (or a part of it)
                 // collider hit might be a child of target instead of the target itself
