@@ -38,10 +38,10 @@ public class LevelManager_brendan : MonoBehaviour
         {
             instructionsPanel.SetActive(true);
         }
-    }
 
-    public void closeInstructions()
-    {
-        instructionsPanel.SetActive(false);
+        else if (Keyboard.current.qKey.wasPressedThisFrame && instructionsPanel.activeSelf)
+        {
+            instructionsPanel.SetActive(false);
+        }
     }
 }

@@ -119,8 +119,8 @@ public class Player_brendan : MonoBehaviour
         Transform slot = target.transform.GetChild(0);
 
         heldObject.transform.SetParent(slot, false);
-        heldObject.transform.localPosition = Vector3.zero;
-        heldObject.transform.localRotation = Quaternion.identity;
+        heldObject.transform.localPosition = new Vector3(0, 0.5f, 0);
+        heldObject.transform.localRotation = Quaternion.identity * Quaternion.Euler(0, 90, 0);
 
         SetHeldState(heldObject, false);
 
