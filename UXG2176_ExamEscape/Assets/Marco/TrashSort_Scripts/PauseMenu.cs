@@ -36,6 +36,7 @@ public class PauseMenu : MonoBehaviour
     private void Awake()
     {
         pauseAction = InputSystem.actions.FindAction(pauseActionName, true);
+        if(pausePanel != null)
         pausePanel.SetActive(false);
         instructionsPanel.SetActive(false);
     }
@@ -56,21 +57,25 @@ public class PauseMenu : MonoBehaviour
     {
         IsPaused = false;
         Time.timeScale = 1f;
-        pausePanel.SetActive(false);
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
         instructionsPanel.SetActive(false);
         SetPlayerControl(true);
     }
 
     public void OpenInstructions()
     {
-        pausePanel.SetActive(false);
+        if (pausePanel != null)
+            pausePanel.SetActive(false);
         instructionsPanel.SetActive(true);
     }
 
     public void CloseInstructions()
     {
         instructionsPanel.SetActive(false);
-        pausePanel.SetActive(true);
+        if (pausePanel != null)
+            pausePanel.SetActive(true);
+        SetPlayerControl(true);
     }
 
     public void Restart()
@@ -102,7 +107,8 @@ public class PauseMenu : MonoBehaviour
     {
         IsPaused = true;
         Time.timeScale = 0f;
-        pausePanel.SetActive(true);
+        if (pausePanel != null)
+            pausePanel.SetActive(true);
         instructionsPanel.SetActive(false);
         SetPlayerControl(false);
     }

@@ -50,6 +50,7 @@ public class BasicMovement : MonoBehaviour
 
     void Update()
     {
+        if (!Gunnode.GameManager.IsPlaying) return;
         HandleCrouch();
         HandleMovement();
         HandleLook();
