@@ -56,6 +56,7 @@ public class BasicMovement : MonoBehaviour
             HandleCrouch();
             HandleMovement();
             HandleLook();
+        if(!Gunnode.GameManager.IsPlaying) return;
         }
     }
 
