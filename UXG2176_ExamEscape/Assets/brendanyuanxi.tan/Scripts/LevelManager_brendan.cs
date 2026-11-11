@@ -17,6 +17,8 @@ public class LevelManager_brendan : MonoBehaviour
         player = FindFirstObjectByType<Player_brendan>().gameObject;
         door = GameObject.FindGameObjectsWithTag("Finish");
 
+        itemComplete = 0;
+
         instructionsPanel.SetActive(true);
         //Debug.Log(player);
     }
