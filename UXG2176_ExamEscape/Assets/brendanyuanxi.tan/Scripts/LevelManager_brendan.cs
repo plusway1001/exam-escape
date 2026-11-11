@@ -24,7 +24,7 @@ public class LevelManager_brendan : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (itemComplete == 5)
+        if (itemComplete == 1)
         {
             gameOver = true;
             Gunnode.GameManager.CompleteLevel();

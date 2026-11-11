@@ -23,6 +23,11 @@ namespace Nicholas
         {
             if (o == null || !completed.Add(o)) return;
             Changed?.Invoke();
+
+            if (objectives.IndexOf(o) == objectives.Count - 1)
+            {
+                Gunnode.GameManager.CompleteLevel();
+            }
         }
     }
 }
