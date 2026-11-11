@@ -30,6 +30,7 @@ public class ClueViewer : MonoBehaviour
 
     private readonly StringBuilder builder = new();
     private InputAction closeAction;
+    
     private int openedFrame = -1;
     private int closedFrame = -1;
 
@@ -56,7 +57,8 @@ public class ClueViewer : MonoBehaviour
         // Skip the frame we opened on, otherwise the same E press would close it instantly.
         if (!IsOpen || Time.frameCount == openedFrame) return;
 
-        //if (closeAction.WasPressedThisFrame()) Close();
+        if (closeAction.WasPressedThisFrame()) Close();
+        
     }
 
     public void Open()

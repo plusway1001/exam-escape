@@ -49,7 +49,7 @@ public class PlayerInteractor : MonoBehaviour
         dropAction = InputSystem.actions.FindAction(dropActionName, false);
         if (dropAction == null)
         {
-            Debug.LogWarning($"PlayerInteractor: no '{dropActionName}' action found, using {fallbackDropBinding}.", this);
+            //Debug.LogWarning($"PlayerInteractor: no '{dropActionName}' action found, using {fallbackDropBinding}.", this);
             dropAction = new InputAction(dropActionName, InputActionType.Button, fallbackDropBinding);
             dropAction.Enable();
             createdDropAction = true;
