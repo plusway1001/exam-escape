@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace Gunnode
@@ -131,6 +132,27 @@ namespace Gunnode
                 Time.timeScale = 1f;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
+            }
+
+            SetLookInput(!frozen);
+        }
+
+        // the player turns the camera with the mouse straight from these actions, and timeScale 0
+        // doesn't stop that. a switched-off action reads as zero, so the camera stays still behind a menu.
+        // the menus click through the separate UI actions, so they still work
+        private static void SetLookInput(bool on)
+        {
+            if (InputSystem.actions == null) return;
+
+            foreach (string name in new[] { "Pointer", "Look" })
+            {
+                InputAction action = InputSystem.actions.FindAction(name);
+                if (action == null) continue;
+
+                if (on)
+                    action.Enable();
+                else
+                    action.Disable();
             }
         }
     }
