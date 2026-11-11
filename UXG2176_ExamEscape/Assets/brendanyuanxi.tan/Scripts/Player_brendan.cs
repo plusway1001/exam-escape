@@ -1,5 +1,4 @@
-using Unity.Cinemachine;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -12,11 +11,11 @@ public class Player_brendan : MonoBehaviour
     public GameObject interactUI;
     public GameObject placementUI;
     public GameObject crosshair;
+    public RawImage crosshairImg;
 
     public GameObject holdItem;
+    public GameObject heldObject;
     [HideInInspector] public bool isHolding = false;
-
-    [HideInInspector] public GameObject officePrefab;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,16 +24,10 @@ public class Player_brendan : MonoBehaviour
         interactUI.SetActive(false);
         placementUI.SetActive(false);
 
-        officePrefab = GameObject.FindGameObjectWithTag("Office");
+        crosshairImg = crosshair.GetComponent<RawImage>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void FixedUpdate()
+    private void Update()
     {
         Vector3 origin = new Vector3(transform.position.x, transform.position.y + ryacastYOffset, transform.position.z);
         Vector3 direction = transform.GetChild(0).forward;
@@ -42,67 +35,128 @@ public class Player_brendan : MonoBehaviour
         //Draws a line in the Scene view
         Debug.DrawRay(origin, direction * maxDistance, Color.red);
 
+        //wasPressedThisFrame fires once per key press, instead of every frame while F is held
+        bool interactPressed = Keyboard.current.fKey.wasPressedThisFrame;
+
         //If the Raycast hits somthing
         if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance))
         {
-            //Debug.Log(hit.collider);
-            GameObject gameObject = hit.collider.gameObject;
+            GameObject hitObject = hit.collider.gameObject;
 
-            if (gameObject.CompareTag("Interactable") && gameObject.GetComponent<TargetObjects_brendan>().canBeSelected && !isHolding)
+            //If the player is facing an interactable object, that can be selected and the player is not holding any other item
+            if (!isHolding
+                && hitObject.CompareTag("Interactable")
+                && hitObject.TryGetComponent(out TargetObjects_brendan item)
+                && item.canBeSelected)
             {
-                //Debug.Log("Interact with object");
-                interactUI.SetActive(true);
-                crosshair.GetComponent<RawImage>().color = Color.red;
+                //Turns on Interact UI
+                ShowPrompt(true, false, Color.red);
 
-                //Debug.Log(gameObject.name);
-
-                if (Keyboard.current.fKey.isPressed)
+                if (interactPressed)
                 {
-                    gameObject.transform.SetParent(holdItem.transform, false);
-                    gameObject.transform.position = holdItem.transform.position;
-
-
-                    isHolding = true;
-
+                    PickUp(hitObject);
                 }
             }
 
-            else if (gameObject.CompareTag("Target") && isHolding)
+            //If the player is facing the cabinet cubicle and are holding an item
+            else if (isHolding && hitObject.CompareTag("Target") && IsSlotFree(hitObject))
             {
-                placementUI.SetActive(true);
-                crosshair.GetComponent<RawImage>().color = Color.green;
+                //Turns on Placement UI
+                ShowPrompt(false, true, Color.green);
 
-
-                if (Keyboard.current.fKey.isPressed)
+                if (interactPressed)
                 {
-                    GameObject targetPlace = holdItem.transform.GetChild(0).gameObject;
-
-                    targetPlace.transform.SetParent(officePrefab.transform, false);
-                    targetPlace.transform.position = gameObject.transform.GetChild(0).transform.position;
-
-                    if (targetPlace.GetComponent<TargetObjects_brendan>().targetPoint == gameObject)
-                    {
-                        targetPlace.transform.GetComponent<TargetObjects_brendan>().isPlacedCorrectly = true;
-                        LevelManager_brendan.itemComplete++;
-
-                        Debug.Log(LevelManager_brendan.itemComplete);
-                    }
-
-                    isHolding = false;
+                    PlaceItem(hitObject);
                 }
             }
 
-
+            //Hit something that is neither: reset the prompts
+            else
+            {
+                ShowPrompt(false, false, Color.black);
+            }
         }
 
         //If raycast doesn't hit anything
         else
         {
-            //Disable the interact UI prompt
-            interactUI.SetActive(false);
-            placementUI.SetActive(false);
-            crosshair.GetComponent<RawImage>().color = Color.black;
-
+            //Disables and reset the interact UI prompt
+            ShowPrompt(false, false, Color.black);
         }
+    }
+
+    void PickUp(GameObject obj)
+    {
+        heldObject = obj;
+
+        //Sets the interacting object to be parent of the player
+        obj.transform.SetParent(holdItem.transform, false);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.identity;
+
+        SetHeldState(obj, true);
+        isHolding = true;
+    }
+
+    bool IsSlotFree(GameObject target)
+    {
+        int slotCount = target.transform.GetChild(0).childCount;
+        
+        if (slotCount > 0)
+        {
+            return false;
+        }
+
+        else
+        {
+            return true;
+        }
+    }
+
+    void PlaceItem(GameObject target)
+    {
+        //Return the GameObject back to the office enviromnent, at the target position of the cabinet cubicle
+        Transform slot = target.transform.GetChild(0);
+
+        heldObject.transform.SetParent(slot, false);
+        heldObject.transform.localPosition = new Vector3(0, 0.5f, 0);
+        heldObject.transform.localRotation = Quaternion.identity * Quaternion.Euler(0, 90, 0);
+
+        SetHeldState(heldObject, false);
+
+        //Checks if the item is placed correctly
+        if (heldObject.TryGetComponent(out TargetObjects_brendan item) && item.targetPoint == target)
+        {
+            item.isPlacedCorrectly = true;
+            item.canBeSelected = false;
+
+            LevelManager_brendan.itemComplete++;
+
+            //Debug.Log(LevelManager_brendan.itemComplete);
+        }
+
+        heldObject = null;
+        isHolding = false;
+    }
+
+    //While held, the item's colliders are off so that they can't block the raycast
+    void SetHeldState(GameObject obj, bool held)
+    {
+        foreach (Collider col in obj.GetComponentsInChildren<Collider>())
+        {
+            col.enabled = !held;
+        }
+
+        if (obj.TryGetComponent(out Rigidbody rb))
+        {
+            rb.isKinematic = held;
+        }
+    }
+
+    void ShowPrompt(bool interact, bool placement, Color crosshairColor)
+    {
+        interactUI.SetActive(interact);
+        placementUI.SetActive(placement);
+        crosshairImg.color = crosshairColor;
     }
 }
