@@ -61,6 +61,8 @@ namespace Isaiah
 
             Solved?.Invoke();
             onSolved?.Invoke();
+
+            Gunnode.GameManager.CompleteLevel();
         }
     }
 }

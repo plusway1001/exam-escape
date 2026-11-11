@@ -10,7 +10,10 @@ namespace Isaiah
         [SerializeField] private float turnSpeed = 360f;
 
         [Header("Feedback")]
-        [SerializeField] private string prompt = "[E] Rotate mirror";
+        // [SerializeField] private string prompt = "[E] Rotate mirror";
+        [SerializeField] private Sprite prompt;
+
+        public Sprite Prompt => prompt; 
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip turnClip;
 
@@ -19,7 +22,7 @@ namespace Isaiah
         private float targetYaw;
         private bool locked;
 
-        public string Prompt => prompt;
+        // public string Prompt => prompt;
         public bool CanInteract => !locked;
 
         private void Awake()
