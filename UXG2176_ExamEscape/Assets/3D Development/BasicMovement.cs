@@ -51,7 +51,7 @@ public class BasicMovement : MonoBehaviour
 
     void Update()
     {
-        if (InputBlocker.InputBlocked)
+        if (!InputBlocker.InputBlocked)
         {
             HandleCrouch();
             HandleMovement();
