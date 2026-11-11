@@ -216,10 +216,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8312292990956490004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30fa40d28b5898c47ae10840972186a7, type: 3}
+  m_Script: {fileID: 11500000, guid: 7befaa7d678ec9e468cc81a8d9921160, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Gunnode.ConfirmDialog
+  m_EditorClassIdentifier: Assembly-CSharp::Gunnode.UIPanel
   firstSelected: {fileID: 6884866405239738146}
   fadeTime: 0.15
-  yesButton: {fileID: 0}
-  noButton: {fileID: 6884866405239738146}
