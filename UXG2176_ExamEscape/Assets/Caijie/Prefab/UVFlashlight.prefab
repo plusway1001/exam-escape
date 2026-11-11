@@ -278,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c4ab62b000d1474b9da36a3b970c119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Caijie.FlashlightPickup
-  prompt: {fileID: 21300000, guid: fb346c842c2aeda4ca8c194d70ced316, type: 3}
+  prompt: Pick up UV flashlight
   heldPosition: {x: 0, y: 0.65, z: 0.25}
   heldRotation: {x: 95, y: 0, z: 0}
   onPickedUp:
@@ -309,10 +309,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Caijie.UVFlashlight
   uvLight: {fileID: 4987743487608094301}
-  beamCore: 0.8
-  occluderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!1001 &4180724417433025726
 PrefabInstance:
   m_ObjectHideFlags: 0

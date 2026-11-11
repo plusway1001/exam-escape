@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace Caijie
 {
@@ -9,11 +8,11 @@ namespace Caijie
     public static class InteractionPrompt
     {
         // HUD listen to this, send null to hide the prompt
-        // this is a list of methods waiting to be called, and each one receives a Sprite (the prompt picture).
+        // this is a list of methods waiting to be called, and each one receives a string.
         // event means other scripts can only add or remove
-        public static event Action<Sprite> Changed;
+        public static event Action<string> Changed; 
 
-        public static void Show(Sprite image) => Changed?.Invoke(image);
+        public static void Show(string text) => Changed?.Invoke(text);
         public static void Hide() => Changed?.Invoke(null);
     }
 }
