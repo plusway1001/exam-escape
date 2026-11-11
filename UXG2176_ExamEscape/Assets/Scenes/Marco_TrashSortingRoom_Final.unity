@@ -609,7 +609,7 @@ MonoBehaviour:
   runSpeed: 6
   crouchSpeed: 1.5
   jumpHeight: 1
-  gravity: -9.81
+  gravity: -8.51
   crouchHeight: 1
   crouchTransitionSpeed: 10
 --- !u!143 &184158884
@@ -6264,8 +6264,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 22
+  m_fontSizeBase: 22
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -6303,7 +6303,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -25.514404, y: 0, z: -85.04791, w: 0}
+  m_margin: {x: -350.98923, y: -70.546265, z: -408.9195, w: -379.98782}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -8234,8 +8234,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.179077, y: -5.1793213}
-  m_SizeDelta: {x: -934.023, y: -444.06284}
+  m_AnchoredPosition: {x: -13.340942, y: 2.8239746}
+  m_SizeDelta: {x: -1004.1, y: -503.76}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1848363562
 MonoBehaviour:
@@ -9696,8 +9696,7 @@ MonoBehaviour:
   puzzle: {fileID: 1080410414}
   panel: {fileID: 1848363560}
   clueText: {fileID: 1417990469}
-  disableWhileOpen:
-  - {fileID: 184158883}
+  disableWhileOpen: []
   closeActionName: Interact
 --- !u!1 &2081079210
 GameObject:
