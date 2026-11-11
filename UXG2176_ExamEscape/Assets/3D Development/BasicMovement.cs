@@ -51,14 +51,11 @@ public class BasicMovement : MonoBehaviour
 
     void Update()
     {
-        if (!InputBlocker.InputBlocked)
-        {
         if (!Gunnode.GameManager.IsPlaying) return;
+        if(InputBlocker.InputBlocked) return;
             HandleCrouch();
             HandleMovement();
             HandleLook();
-        if(!Gunnode.GameManager.IsPlaying) return;
-        }
     }
 
     void HandleCrouch()

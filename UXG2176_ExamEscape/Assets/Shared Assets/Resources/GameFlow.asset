@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Gunnode.GameFlow
   menuScene: Main
   levelScenes:
+  - IsaiahV2
   - NicholasScene
   - brendanyuanxi.tan
-  - IsaiahV2
+  - Marco_TrashSortingRoom_Final
+  - Caijie

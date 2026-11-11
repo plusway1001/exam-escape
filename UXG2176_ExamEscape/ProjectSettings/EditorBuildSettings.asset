@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: ee216f76f8f63e3478333ad541b413e9
   - enabled: 1
+    path: Assets/Scenes/NicholasScene.unity
+    guid: 7ce0c8d3a26281646b6bd503b5b1d445
+  - enabled: 1
     path: Assets/Scenes/Caijie/Caijie.unity
     guid: f1b768f69e5291c4ba2d01c1740db20b
   - enabled: 1
@@ -17,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/IsaiahV2.unity
     guid: c22d1a4455f2262409f37236d6c2e01a
+  - enabled: 1
+    path: Assets/Scenes/Marco_TrashSortingRoom_Final.unity
+    guid: 48f7be0bc01f13e4ea2bcf941f79d4d0
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 089d05379fc63524a8bef6f7223a7bdf, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
