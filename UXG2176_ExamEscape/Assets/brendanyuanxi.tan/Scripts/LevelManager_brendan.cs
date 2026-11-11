@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class LevelManager_brendan : MonoBehaviour
 {
@@ -8,12 +9,15 @@ public class LevelManager_brendan : MonoBehaviour
 
     [HideInInspector] public GameObject[] door;
 
+    public GameObject instructionsPanel;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = FindFirstObjectByType<Player_brendan>().gameObject;
         door = GameObject.FindGameObjectsWithTag("Finish");
 
+        instructionsPanel.SetActive(true);
         //Debug.Log(player);
     }
 
@@ -28,6 +32,16 @@ public class LevelManager_brendan : MonoBehaviour
             {
                 Destroy(e);
             }
+        }
+
+        if (Keyboard.current.qKey.wasPressedThisFrame && !instructionsPanel.activeSelf)
+        {
+            instructionsPanel.SetActive(true);
+        }
+
+        else if (Keyboard.current.qKey.wasPressedThisFrame && instructionsPanel.activeSelf)
+        {
+            instructionsPanel.SetActive(false);
         }
     }
 }

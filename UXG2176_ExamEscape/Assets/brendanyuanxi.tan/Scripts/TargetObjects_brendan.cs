@@ -4,8 +4,8 @@ using UnityEngine.UIElements;
 
 public class TargetObjects_brendan : MonoBehaviour
 {
-    [HideInInspector] public bool canBeSelected = true;
-    [HideInInspector] public bool isPlacedCorrectly;
+    public bool canBeSelected = true;
+    public bool isPlacedCorrectly;
 
     public GameObject targetPoint;
 
@@ -24,11 +24,6 @@ public class TargetObjects_brendan : MonoBehaviour
             
 
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(other.gameObject.name);
     }
 
 }
