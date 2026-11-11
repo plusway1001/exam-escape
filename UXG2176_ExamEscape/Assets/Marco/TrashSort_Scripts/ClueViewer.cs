@@ -45,10 +45,18 @@ public class ClueViewer : MonoBehaviour
 
     private void Update()
     {
+        // The shared pause menu (GameScreens) opened on top: put the note away, so Resume drops
+        // the player straight back into the game instead of a frozen note with a locked mouse.
+        if (IsOpen && !Gunnode.GameManager.IsPlaying)
+        {
+            Close();
+            return;
+        }
+
         // Skip the frame we opened on, otherwise the same E press would close it instantly.
         if (!IsOpen || Time.frameCount == openedFrame) return;
 
-        if (closeAction.WasPressedThisFrame()) Close();
+        //if (closeAction.WasPressedThisFrame()) Close();
     }
 
     public void Open()
@@ -85,6 +93,9 @@ public class ClueViewer : MonoBehaviour
     private void SetPlayerControl(bool enabled)
     {
         foreach (var behaviour in disableWhileOpen) behaviour.enabled = enabled;
+
+        // While the shared pause / end screens are up, GameManager owns the cursor.
+        if (!Gunnode.GameManager.IsPlaying) return;
 
         Cursor.lockState = enabled ? CursorLockMode.Locked : CursorLockMode.None;
         Cursor.visible = !enabled;

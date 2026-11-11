@@ -35,6 +35,18 @@ public class PauseMenu : MonoBehaviour
 
     private void Awake()
     {
+        // The shared GameScreens prefab owns Esc now. If it's in this scene, step aside,
+        // otherwise both pause scripts react to Esc, get out of step, and this one freezes
+        // the game (timeScale 0) with no menu showing.
+        if (FindAnyObjectByType<Gunnode.PauseMenu>(FindObjectsInactive.Include) != null)
+        {
+            if (pausePanel != null) pausePanel.SetActive(false);
+            if (instructionsPanel != null) instructionsPanel.SetActive(false);
+            Debug.Log("Marco PauseMenu: GameScreens is in the scene, so this pause menu is switched off.", this);
+            enabled = false;
+            return;
+        }
+
         pauseAction = InputSystem.actions.FindAction(pauseActionName, true);
         if(pausePanel != null)
         pausePanel.SetActive(false);
