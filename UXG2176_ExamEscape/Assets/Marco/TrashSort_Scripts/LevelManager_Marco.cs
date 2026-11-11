@@ -74,7 +74,8 @@ public class LevelManager_Marco : MonoBehaviour
         if (State != GameState.Playing) return;
 
         if (!string.IsNullOrEmpty(nextSceneName))
-            SceneManager.LoadScene(nextSceneName);
+            //SceneManager.LoadScene(nextSceneName);
+            Gunnode.GameManager.CompleteLevel();
         else
             EndGame(true);
     }
@@ -97,6 +98,7 @@ public class LevelManager_Marco : MonoBehaviour
         else
         {
             Time.timeScale = 0f;
+            Gunnode.GameManager.Lose();
             OnGameOver?.Invoke();
         }
     }
