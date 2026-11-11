@@ -27,7 +27,7 @@ public class LevelManager_brendan : MonoBehaviour
         if (itemComplete == 5)
         {
             gameOver = true;
-            Gunnode.GameManager.Lose();
+            Gunnode.GameManager.CompleteLevel();
             
             foreach (GameObject e in door)
             {
