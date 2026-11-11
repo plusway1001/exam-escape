@@ -36,7 +36,7 @@ public class Player_brendan : MonoBehaviour
         Debug.DrawRay(origin, direction * maxDistance, Color.red);
 
         //wasPressedThisFrame fires once per key press, instead of every frame while F is held
-        bool interactPressed = Keyboard.current.fKey.wasPressedThisFrame;
+        bool interactPressed = Keyboard.current.eKey.wasPressedThisFrame;
 
         //If the Raycast hits somthing
         if (Physics.Raycast(origin, direction, out RaycastHit hit, maxDistance))
