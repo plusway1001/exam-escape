@@ -1,7 +1,9 @@
+using NUnit.Framework.Internal.Commands;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace Caijie
 {
@@ -13,9 +15,6 @@ namespace Caijie
         [Header("Buttons")]
         [Tooltip("Correct order = order in this list (after shuffling, if enabled).")]
         [SerializeField] private ButtonSequence[] sequence;
-
-        // extra buttons that are always wrong (optional)
-        [SerializeField] private ButtonSequence[] decoys;
 
         // the number models in the room. clues[0] is "1", clues[1] is "2", and so on
         [SerializeField] private UVRevealable[] clues;
@@ -32,15 +31,17 @@ namespace Caijie
 
         [Header("Events")]
         public UnityEvent onCorrectPress;
-        public UnityEvent onWrongPress;   // the warning popup (A8) and a buzz sound
-        public UnityEvent onSolved;       // PuzzleDoor.Unlock goes here
+        public UnityEvent onWrongPress;   // the warning popup
+        public UnityEvent onSolved;
 
         private int step;       // how many buttons are done so far
-        private bool busy;      // true while the wrong-answer blink is playing
+        private bool busy;      // true while the wrong-answer blink is playing, will ignore any presss
         private bool solved;
+        private InputAction skipLevel; //for skipping level
 
         // the button counter on my HUD listens to this: how many are done, out of how many.
         // written as System.Action because "using System;" would make Random ambiguous
+        // this is to prevent unity get confused with Shuffle's random.range
         public event System.Action<int, int> ProgressChanged;
 
         private void Awake()
@@ -55,29 +56,37 @@ namespace Caijie
         {
             foreach (ButtonSequence b in sequence)
                 b.Pressed += HandlePress;
-            foreach (ButtonSequence b in decoys)
-                b.Pressed += HandlePress;
         }
 
         private void OnDisable()
         {
             foreach (ButtonSequence b in sequence)
                 b.Pressed -= HandlePress;
-            foreach (ButtonSequence b in decoys)
-                b.Pressed -= HandlePress;
+        }
+
+        // for skipping level with button p
+        // for prof to conveniently skip 
+        private void Update()
+        {
+            skipLevel = InputSystem.actions.FindAction("SkipLevel");
+
+            if (skipLevel.WasPressedThisFrame())
+            Solve();
         }
 
         private void Start()
         {
             // done in Start, not Awake, because the buttons read their own colours in their Awake.
-            // by the time any Start runs, every Awake has finished.
-            AssignClueColours();    // written in task 4
+            // given each number its color based on the random color get assigned
+            AssignClueColours();
+            //tells the UI counter 0/9
             ProgressChanged?.Invoke(step, sequence.Length);
         }
 
-        // runs every time any button (or decoy) is pressed
+        // runs every time any buttonis pressed
         private void HandlePress(ButtonSequence button)
         {
+            //if pressed correctly or wrong blinking animation is happening, skip pressing
             if (solved || busy) return;
 
             if (button == sequence[step])
@@ -89,18 +98,19 @@ namespace Caijie
 
                 step++;
                 onCorrectPress.Invoke();
-                ProgressChanged?.Invoke(step, sequence.Length);
+                ProgressChanged?.Invoke(step, sequence.Length); //update the progress counter
 
                 if (step == sequence.Length)
                     Solve();
             }
             else
             {
-                // wrong button or a decoy
+                // wrong button
                 StartCoroutine(WrongAnswer(button));
             }
         }
 
+        //couroutine so can wait between blinks
         private IEnumerator WrongAnswer(ButtonSequence wrongButton)
         {
             busy = true;    // ignore any presses while this plays
@@ -132,8 +142,8 @@ namespace Caijie
                 sequence[i].Revealable.KeepRevealed = false;   // back to Grey Base (unless the beam is on it)
             }
 
-            // shuffle after the reset, because the reset above needs the old order
-            // to know which buttons were pressed. the numbers now show new colours.
+            // shuffle after the reset, because the reset above needs the old order to know which buttons were pressed.
+            // the numbers now show new colours
             if (reshuffleOnMistake)
             {
                 Shuffle(sequence);
@@ -141,17 +151,13 @@ namespace Caijie
             }
 
             step = 0;
-            ProgressChanged?.Invoke(step, sequence.Length);
-            busy = false;
+            ProgressChanged?.Invoke(step, sequence.Length); //reset the progress counter
+            busy = false; //so that can continue press
         }
 
         private void Solve()
         {
             solved = true;
-
-            // decoys can't be pressed any more either
-            foreach (ButtonSequence d in decoys)
-                d.Locked = true;
 
             onSolved.Invoke();
         }
@@ -178,16 +184,19 @@ namespace Caijie
         }
 
         // runs in the Editor whenever a value changes in the Inspector.
-        // warns about setup mistakes before you even press Play.
+        // warns about setup mistakes before pressing play in unity
         private void OnValidate()
         {
+            // no button or button less than 3
             if (sequence == null || sequence.Length < 3)
             {
                 Debug.LogWarning($"{name}: the brief needs at least 3 interactions - add more buttons.", this);
                 return;
             }
 
+            //HashSet<T> is a collection that holds each item at most once and can check "is this in here?"
             HashSet<ButtonSequence> seen = new HashSet<ButtonSequence>();
+            //empty slot or any button listed twice
             foreach (ButtonSequence b in sequence)
             {
                 if (b == null)
@@ -196,6 +205,7 @@ namespace Caijie
                     Debug.LogWarning($"{name}: '{b.name}' is in the sequence twice.", this);
             }
 
+            // no clue or clues and buttons have different amount
             if (clues == null || clues.Length != sequence.Length)
                 Debug.LogWarning($"{name}: needs exactly one number clue per ButtonSequence ({sequence.Length}).", this);
         }
