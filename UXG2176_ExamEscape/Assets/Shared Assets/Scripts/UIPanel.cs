@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Gunnode
 {
-    // base class for all my menu panels (pause, confirm, game over, win).
+    // base class for all menu panels (pause, confirm, game over, win).
     // handles showing and hiding with a quick fade that still works while paused,
     // and selects a button when the panel opens so keyboard and gamepad work.
     [RequireComponent(typeof(CanvasGroup))]
