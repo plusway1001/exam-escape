@@ -1,4 +1,3 @@
-using NUnit.Framework.Internal.Commands;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +48,8 @@ namespace Caijie
             // new random order every time the scene loads (every loop)
             if (shuffleEachLoop)
                 Shuffle(sequence);
+
+            skipLevel = InputSystem.actions.FindAction("SkipLevel");
         }
 
         // start listening to every button. each += in OnEnable has a matching -= in OnDisable.
@@ -70,8 +71,8 @@ namespace Caijie
         {
             skipLevel = InputSystem.actions.FindAction("SkipLevel");
 
-            if (skipLevel.WasPressedThisFrame())
-            Solve();
+            if (skipLevel != null && skipLevel.WasPressedThisFrame())
+                Solve();
         }
 
         private void Start()
@@ -116,7 +117,7 @@ namespace Caijie
             busy = true;    // ignore any presses while this plays
             onWrongPress.Invoke();
 
-            // only blink the buttons the player already found, so the others aren't given away
+            // only blink the buttons the player already found
             List<UVRevealable> found = new List<UVRevealable>();
             found.Add(wrongButton.Revealable);
             for (int i = 0; i < step; i++)
@@ -157,6 +158,9 @@ namespace Caijie
 
         private void Solve()
         {
+            // skip if already solved, so a second skip press doesn't fire onSolved again
+            if (solved) return;
+
             solved = true;
 
             onSolved.Invoke();
@@ -190,7 +194,7 @@ namespace Caijie
             // no button or button less than 3
             if (sequence == null || sequence.Length < 3)
             {
-                Debug.LogWarning($"{name}: the brief needs at least 3 interactions - add more buttons.", this);
+                Debug.LogWarning($"{name}: needs at least 3 interactions, add more buttons.", this);
                 return;
             }
 

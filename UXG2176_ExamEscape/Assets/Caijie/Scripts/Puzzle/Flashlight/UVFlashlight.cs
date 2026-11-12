@@ -37,7 +37,7 @@ namespace Caijie
 
             // read the cone size from the Light itself, so can just change the spot light angle
             // store the cosine of half the angle now, so the beam check in each frame is just one dot product
-            // Mathf.Deg2Rad converts degrees to radians, Mathf.Cos only works in
+            // Mathf.Deg2Rad converts degrees to radians, Mathf.Cos only works in radians
             // The dot product of two direction vectors (beam forward and direction to the clue) equals to the cosine of the angle between them
             cosHalfAngle = Mathf.Cos(uvLight.spotAngle * 0.5f * beamCore * Mathf.Deg2Rad);
         }
