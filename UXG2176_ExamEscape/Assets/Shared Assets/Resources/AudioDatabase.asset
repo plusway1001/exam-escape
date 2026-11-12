@@ -23,5 +23,8 @@ MonoBehaviour:
   wrong: {fileID: 8300000, guid: 2079b5c366e06e44290b9ab2ea877e27, type: 3}
   correct: {fileID: 8300000, guid: d047b55b5e53b4b40869f417acebac00, type: 3}
   flashlightBtn: {fileID: 8300000, guid: 265729c8fb794c8408eeb5307d888240, type: 3}
+  laserPowered: {fileID: 8300000, guid: 7c6cb879af13d4248b0d70dc4becb12c, type: 3}
+  laserUnpowered: {fileID: 8300000, guid: 2f3f6cb488de744488a239e6c8037d42, type: 3}
+  mirrorTurn: {fileID: 8300000, guid: 43cb8ca027f79304fa53eea7f7b8741e, type: 3}
   gameOver: {fileID: 8300000, guid: cc2f73cb210f75040a6df17df24978c2, type: 3}
   win: {fileID: 8300000, guid: c4db64a56e1e8a340a5c79e3eea41948, type: 3}

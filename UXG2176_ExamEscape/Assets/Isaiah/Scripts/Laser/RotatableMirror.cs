@@ -14,8 +14,6 @@ namespace Isaiah
         [SerializeField] private Sprite prompt;
 
         public Sprite Prompt => prompt; 
-        [SerializeField] private AudioSource audioSource;
-        [SerializeField] private AudioClip turnClip;
 
         private Quaternion startRotation;
         private float currentYaw;
@@ -36,8 +34,7 @@ namespace Isaiah
         {
             targetYaw = Mathf.Repeat(targetYaw + stepDegrees, 360f);
 
-            if (audioSource != null && turnClip != null)
-                audioSource.PlayOneShot(turnClip);
+            AudioManager.Instance.PlaySfxAt(AudioManager.Instance.sounds.mirrorTurn, pivot.position);
         }
 
         private void Update()

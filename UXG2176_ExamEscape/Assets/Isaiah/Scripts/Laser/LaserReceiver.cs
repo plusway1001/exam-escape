@@ -11,11 +11,6 @@ namespace Isaiah
         [SerializeField] private Color offColor = Color.red;
         [SerializeField, ColorUsage(false, true)] private Color onColor = Color.green * 3f;
 
-        [Header("Audio")]
-        [SerializeField] private AudioSource audioSource;
-        [SerializeField] private AudioClip poweredClip;
-        [SerializeField] private AudioClip unpoweredClip;
-
         [Header("Events")]
         public UnityEvent onPowered;
         public UnityEvent onUnpowered;
@@ -47,12 +42,16 @@ namespace Isaiah
         {
             RefreshVisual();
 
-            AudioClip clip = powered ? poweredClip : unpoweredClip;
-            if (audioSource != null && clip != null)
-                audioSource.PlayOneShot(clip);
-
-            if (powered) onPowered?.Invoke();
-            else onUnpowered?.Invoke();
+            if (powered)
+            {
+                AudioManager.Instance.PlaySfxAt(AudioManager.Instance.sounds.laserPowered, transform.position);
+                onPowered?.Invoke();
+            }
+            else
+            {
+                AudioManager.Instance.PlaySfxAt(AudioManager.Instance.sounds.laserUnpowered, transform.position);
+                onUnpowered?.Invoke();
+            }
 
             PoweredChanged?.Invoke(this, powered);
         }
