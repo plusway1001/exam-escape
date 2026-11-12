@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/brendanyuanxi.tan/brendanyuanxi.tan.unity
     guid: 74c339b5f1f47ec4db2338b24890e894
   - enabled: 1
-    path: Assets/Scenes/IsaiahV2.unity
+    path: Assets/Scenes/Isaiah/IsaiahV2.unity
     guid: c22d1a4455f2262409f37236d6c2e01a
   - enabled: 1
     path: Assets/Scenes/Marco_TrashSortingRoom_Final.unity
