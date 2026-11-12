@@ -761,6 +761,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.93411636, y: 0.054324865, z: 0.92571217}
   m_Center: {x: 0.0734911, y: -0.50948596, z: 0.15368864}
+--- !u!1 &401429197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 401429198}
+  - component: {fileID: 401429199}
+  m_Layer: 0
+  m_Name: Exit
+  m_TagString: Exit
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &401429198
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401429197}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.9, y: 14.19, z: 4.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1684672326}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &401429199
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 401429197}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.40565, y: 2, z: 3.0856228}
+  m_Center: {x: 0.70282614, y: 0, z: 0.5428114}
 --- !u!1 &424982039
 GameObject:
   m_ObjectHideFlags: 0
@@ -2834,6 +2887,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8556442441904808890, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
       insertIndex: 97
       addedObject: {fileID: 1262694917}
+    - targetCorrespondingSourceObject: {fileID: 8556442441904808890, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 401429198}
     - targetCorrespondingSourceObject: {fileID: 5087955484008546398, guid: 78408da6292805d43b73aa8bcef39b0b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1021392793}

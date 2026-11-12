@@ -7,6 +7,7 @@ TagManager:
   - Interactable
   - Office
   - Target
+  - Exit
   layers:
   - Default
   - TransparentFX
