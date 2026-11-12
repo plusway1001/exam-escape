@@ -81,9 +81,9 @@ namespace Caijie
         // goes through every revealable and sets IsLit to true or false
         private void UpdateBeam()
         {
-            Vector3 origin = uvLight.transform.position;
-            Vector3 forward = uvLight.transform.forward;
-            float range = uvLight.range;
+            Vector3 origin = uvLight.transform.position; // where the beam start
+            Vector3 forward = uvLight.transform.forward; // direction that the torch is pointing
+            float range = uvLight.range; // how far the light can reach
 
             var targets = UVRevealable.Active;
             for (int i = 0; i < targets.Count; i++)
@@ -97,32 +97,35 @@ namespace Caijie
             }
         }
 
-        // three checks, cheapest first, so most objects get thrown out early
+        // three checks, check cheapest first, so most objects get thrown out early
+        // 1. Distance with squared values
+        // 2. Cone angle with one dot product
+        // 3. Raycast for wall
         private bool IsInBeam(Vector3 point, Transform target, Vector3 origin, Vector3 forward, float range)
         {
-            Vector3 toTarget = point - origin;
-            float sqrDist = toTarget.sqrMagnitude;
+            Vector3 toTarget = point - origin; // arrow from torch to clue
+            float sqrDist = toTarget.sqrMagnitude; //square the length is faster than square root it
 
             // 1. is it too far away?
-            if (sqrDist > range * range) return false;
+            if (sqrDist > range * range) return false; //range*range so both sides are squared
 
             float dist = Mathf.Sqrt(sqrDist);
-            if (dist < 0.001f) return true;    // basically touching the torch
+            if (dist < 0.001f) return true;    // too small basically touching the torch
             Vector3 dir = toTarget / dist;     // direction with vector of length 1 (basically normlised)
 
             // 2. outside the cone?
             // for two length-1 vectors, Dot gives the cosine of the angle between them
             // 1 = same direction, 0 = perpendicular, -1 = opposite direction
-            // if dot < cosHalfAngle, it means outside the cone
+            // if dot < cosHalfAngle, it means outside the cone (smaller dot means wider angle)
             if (Vector3.Dot(forward, dir) < cosHalfAngle) return false;
 
             // 3. is it blocked by a wall?
             // more expensve Raycast check
-            // Physics.Raycast fires an invisible line from origin in direction dir, but only for dist metres
+            // Physics.Raycast: fires an invisible line from origin in direction dir, but only for dist metres
             // it will stops at the target and cant be blocked by things behind it
-            // occluderMask limits it to layers that can block light
-            // QueryTriggerInteraction.Ignore makes it skip trigger colliders, so invisible zones dont block the beam
-            // if the ray hits something, out RaycastHit hit tells you what
+            // occluderMask: limits it to layers that can block light
+            // QueryTriggerInteraction.Ignore: makes it skip trigger colliders, so invisible zones dont block the beam
+            // if the ray hits something, "out RaycastHit hit" tells you what
             // the ray stops 10 cm short, so a number stuck flat against a wall isn't blocked by that same wall
             float checkDist = Mathf.Max(0f, dist - 0.1f);
             if (Physics.Raycast(origin, dir, out RaycastHit hit, checkDist, occluderMask, QueryTriggerInteraction.Ignore))
