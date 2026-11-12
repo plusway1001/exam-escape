@@ -82,7 +82,7 @@ namespace Caijie
 
 
             // temporary: prints how far away the thing you're looking at is
-            Debug.Log(hit.collider.name + " is " + hit.distance.ToString("0.0") + " m away");
+            //Debug.Log(hit.collider.name + " is " + hit.distance.ToString("0.0") + " m away");
 
             // collider is often on a child mesh, so look up through the objects to the parents for the script
             IInteractable target = hit.collider.GetComponentInParent<IInteractable>();

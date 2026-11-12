@@ -19,12 +19,12 @@ namespace Nicholas
                 return;
             }
 
-            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit swapHit, config.aimRange, config.blockerMask, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit swapHit, config.aimRange, config.blockerMask))
             {
                 Swappable = swapHit.collider.GetComponentInParent<Swappable>();
             }
 
-            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit useHit, config.interactRange, config.interactMask, QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit useHit, config.interactRange, config.interactMask))
             {
                 Interactable = useHit.collider.GetComponentInParent<Interactable>();
             }

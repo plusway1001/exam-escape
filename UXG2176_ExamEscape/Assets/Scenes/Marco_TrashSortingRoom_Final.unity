@@ -475,6 +475,10 @@ MonoBehaviour:
   gravity: -8.51
   crouchHeight: 1
   crouchTransitionSpeed: 10
+  footstepClip: {fileID: 8300000, guid: 6bf240cb93ef65a46909a4aa263e0478, type: 3}
+  crouchPitch: 0.8
+  walkPitch: 1
+  runPitch: 1.5
 --- !u!143 &184158884
 CharacterController:
   m_ObjectHideFlags: 0

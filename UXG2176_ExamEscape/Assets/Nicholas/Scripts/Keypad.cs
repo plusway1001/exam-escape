@@ -29,6 +29,7 @@ namespace Nicholas
                 return false;
             }
             IsUnlocked = true;
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.correct);
             if (consumeItem && user != null)
             {
                 user.Remove(requiredItem);

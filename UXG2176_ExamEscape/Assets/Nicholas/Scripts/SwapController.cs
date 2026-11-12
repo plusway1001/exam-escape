@@ -16,12 +16,14 @@ namespace Nicholas
         private readonly List<Swappable> inRange = new();
         private Transform rangeSphere;
 
+        [SerializeField] private AudioClip swapSfx;
+
         private void Awake()
         {
             select = GetComponent<PlayerSelect>();
 
             GameObject s = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            Destroy(s.GetComponent<Collider>());
+            Destroy(s.GetComponent<Collider>()); // Remove the collider so the sphere doesnt block raycasts
             s.GetComponent<Renderer>().sharedMaterial = rangeSphereMaterial;
             s.SetActive(false);
             rangeSphere = s.transform;
@@ -69,6 +71,8 @@ namespace Nicholas
                 first = target;
                 ShowRange(first);
                 Refresh(first);
+
+                AudioManager.Instance.PlaySfxAt(AudioManager.Instance.sounds.select, first.GetBounds().center);
             }
             else if (InRange(first, target))
             {
@@ -84,7 +88,7 @@ namespace Nicholas
                 return;
             }
 
-            Color? c = null;
+            Color? c = null; // Priority: selected > hovered > in range > original color
             if (s == first)
             {
                 c = Cfg.selectedColor;
@@ -106,7 +110,7 @@ namespace Nicholas
         private void ShowRange(Swappable target)
         {
             rangeSphere.position = target.GetBounds().center;
-            rangeSphere.localScale = Vector3.one * Cfg.swapRadius * 2f;
+            rangeSphere.localScale = Vector3.one * Cfg.swapRadius * 2f; //scale base sphere mesh (1 diameter) by radius * 2
             rangeSphere.gameObject.SetActive(true);
 
             inRange.Clear();
@@ -129,7 +133,7 @@ namespace Nicholas
             first = null;
 
             rangeSphere.gameObject.SetActive(false);
-            var previous = new List<Swappable>(inRange);
+            var previous = new List<Swappable>(inRange); // Copy the list first, because Refresh reads inRange and then it is cleared
             inRange.Clear();
             foreach (Swappable s in previous) Refresh(s);
             Refresh(old);
@@ -138,11 +142,13 @@ namespace Nicholas
         private void Swap(Swappable a, Swappable b)
         {
             Bounds ba = a.GetBounds(), bb = b.GetBounds();
-            Vector3 aBase = new Vector3(ba.center.x, ba.min.y, ba.center.z);
+            Vector3 aBase = new Vector3(ba.center.x, ba.min.y, ba.center.z); // swap by bottom-center of the bounds so objects rest on the surface regardless of pivot
             Vector3 bBase = new Vector3(bb.center.x, bb.min.y, bb.center.z);
             a.transform.position += bBase - aBase;
             b.transform.position += aBase - bBase;
 
+            AudioManager.Instance.PlaySfxAt(AudioManager.Instance.sounds.swap, ba.center);
+            AudioManager.Instance.PlaySfxAt(AudioManager.Instance.sounds.swap, bb.center);
             Swappable.NotifySwapped(a, b);
         }
     }

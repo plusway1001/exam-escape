@@ -72,6 +72,7 @@ namespace Nicholas
                 feedback.text = "<color=#FF6666>Wrong code. Try again.</color>";
                 input.text = "";
                 input.ActivateInputField();
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.wrong);
             }
         }
 

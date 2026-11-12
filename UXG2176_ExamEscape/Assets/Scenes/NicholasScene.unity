@@ -671,6 +671,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwapController
   rangeSphereMaterial: {fileID: 2100000, guid: 0e1609e5aa1c8ca4ba0f01b414a9752d, type: 2}
+  swapSfx: {fileID: 8300000, guid: 4201a56910288cb4dba93fab6f1a4b40, type: 3}
 --- !u!114 &141725461
 MonoBehaviour:
   m_ObjectHideFlags: 0

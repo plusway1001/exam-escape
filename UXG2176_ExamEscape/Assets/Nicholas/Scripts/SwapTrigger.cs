@@ -20,7 +20,7 @@ namespace Nicholas
             {
                 return;
             }
-            bool match = (x == a && y == b) || (x == b && y == a);
+            bool match = (x == a && y == b) || (x == b && y == a); // match the pair in either order
             if (!match)
             {
                 return;

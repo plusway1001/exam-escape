@@ -15,11 +15,6 @@ public class TrashBin : MonoBehaviour
     [SerializeField] private Transform ejectPoint;
     [SerializeField] private float ejectSpeed = 4f;
 
-    [Header("Audio (optional)")]
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private AudioClip correctClip;
-    [SerializeField] private AudioClip wrongClip;
-
     public MaterialType BinType => binType;
 
     private void OnTriggerEnter(Collider other)
@@ -31,20 +26,15 @@ public class TrashBin : MonoBehaviour
 
         if (result == SubmitResult.Correct)
         {
-            Play(correctClip);
+            AudioManager.Instance.PlaySfxAt(AudioManager.Instance.sounds.correct, transform.position);
             item.Consume();
         }
         else
         {
-            Play(wrongClip);
+            AudioManager.Instance.PlaySfxAt(AudioManager.Instance.sounds.wrong, transform.position);
             Transform origin = ejectPoint != null ? ejectPoint : transform;
             Vector3 velocity = (origin.forward + Vector3.up) * ejectSpeed;
             item.Eject(origin.position, velocity);
         }
-    }
-
-    private void Play(AudioClip clip)
-    {
-        if (audioSource != null && clip != null) audioSource.PlayOneShot(clip);
     }
 }

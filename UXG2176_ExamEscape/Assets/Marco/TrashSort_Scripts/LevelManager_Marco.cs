@@ -57,12 +57,14 @@ public class LevelManager_Marco : MonoBehaviour
     private void HandleSubmitted(SubmitResult result)
     {
         if (State != GameState.Playing || result == SubmitResult.Correct) return;
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.wrong);
         timer.Subtract(penaltySeconds);
     }
 
     private void HandleSolved()
     {
         if (State != GameState.Playing) return;
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.correct);
         timer.Stop();
         exitDoor.Unlock();
     }
@@ -97,6 +99,7 @@ public class LevelManager_Marco : MonoBehaviour
         }
         else
         {
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.gameOver);
             Time.timeScale = 0f;
             Gunnode.GameManager.Lose();
             OnGameOver?.Invoke();

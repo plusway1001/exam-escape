@@ -35,7 +35,7 @@ namespace Nicholas
             }
         }
 
-        private void OnEnable() => All.Add(this);
+        private void OnEnable() => All.Add(this); // Registry so controller can find every swappable without raycasts
         private void OnDisable() => All.Remove(this);
 
         public void SetColor(Color? tint)
@@ -51,7 +51,7 @@ namespace Nicholas
 
         public Bounds GetBounds()
         {
-            Bounds b = renderers[0].bounds;
+            Bounds b = renderers[0].bounds; // Combine every child renderer into one box
             for (int i = 1; i < renderers.Length; i++)
             {
                 b.Encapsulate(renderers[i].bounds);

@@ -106,6 +106,7 @@ public class Player_brendan : MonoBehaviour
         //Disables the collider and rigidbody of the held item, to prevent interferences with the player's raycast
         SetHeldState(targetedObj, true);
         isHolding = true;
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.pickup);
     }
 
     //Function used to check if the cubicle the player is facing has an object already inside
@@ -153,6 +154,8 @@ public class Player_brendan : MonoBehaviour
             LevelManager_brendan.itemComplete++;
 
         }
+
+        AudioManager.Instance.PlaySfxAt(AudioManager.Instance.sounds.place, heldObject.transform.position);
 
         //Resets the var used to store the hled objects since the object is now placed and no longer in the player's hand
         heldObject = null;

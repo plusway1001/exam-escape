@@ -88,6 +88,7 @@ namespace Gunnode
 
             if (IsFinalLevel)
             {
+                AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.win);
                 ShowEnd(winPanel);
             }
             else
@@ -102,6 +103,7 @@ namespace Gunnode
         public static void Lose()
         {
             if (!IsPlaying) return;
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.gameOver);
             ShowEnd(losePanel);
         }
 

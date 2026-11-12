@@ -34,6 +34,13 @@ public class BasicMovement : MonoBehaviour
     private float standingCameraY;
     private bool isCrouching;
 
+    [SerializeField] private AudioClip footstepClip;
+    private bool footstepsPlaying;
+
+    public float crouchPitch = 0.5f;
+    public float walkPitch = 1f;
+    public float runPitch = 1.5f;
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -51,8 +58,11 @@ public class BasicMovement : MonoBehaviour
 
     void Update()
     {
-        if (!Gunnode.GameManager.IsPlaying) return;
-        if(InputBlocker.InputBlocked) return;
+        if (!Gunnode.GameManager.IsPlaying || InputBlocker.InputBlocked)
+        {
+            StopFootsteps();
+            return;
+        }
             HandleCrouch();
             HandleMovement();
             HandleLook();
@@ -125,6 +135,7 @@ public class BasicMovement : MonoBehaviour
         move.y = verticalVelocity;
 
         controller.Move(move * Time.deltaTime);
+        FootstepsSFX();
     }
 
     void HandleLook()
@@ -144,5 +155,44 @@ public class BasicMovement : MonoBehaviour
             cameraPitch = 0.0f;
         }
         cameraTarget.localRotation = Quaternion.Euler(cameraPitch, 0f, 0f);
+    }
+
+    void FootstepsSFX()
+    {
+        Vector3 flat = new Vector3(controller.velocity.x, 0f, controller.velocity.z);
+        bool shouldPlay = controller.isGrounded && flat.magnitude > 0.1f;
+
+        if (shouldPlay && !footstepsPlaying)
+        {
+            AudioManager.Instance.PlayLoop(AudioManager.Instance.sounds.footsteps);
+            footstepsPlaying = true;
+        }
+        else if (!shouldPlay && footstepsPlaying)
+        {
+            AudioManager.Instance.StopLoop();
+            footstepsPlaying = false;
+        }
+        if (footstepsPlaying)
+        {
+            float pitch = walkPitch;
+
+            if (isCrouching)
+            {
+                pitch = crouchPitch;
+            }
+            else if (sprintAction.IsPressed())
+            {
+                pitch = runPitch;
+            }
+
+            AudioManager.Instance.SetLoopPitch(pitch);
+        }
+    }
+
+    void StopFootsteps()
+    {
+        if (!footstepsPlaying) return;
+        AudioManager.Instance.StopLoop();
+        footstepsPlaying = false;
     }
 }

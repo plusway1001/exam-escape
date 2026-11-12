@@ -46,7 +46,7 @@ namespace Caijie
         public void Equip()
         {
             equipped = true;
-
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.pickup);
             // press F to toggle, its alr set in InputSystem
             toggleAction = InputSystem.actions.FindAction("Flashlight");
             Equipped?.Invoke();
@@ -76,6 +76,7 @@ namespace Caijie
                 ClearBeam();
 
             Toggled?.Invoke(on);
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.flashlightBtn);
         }
 
         // goes through every revealable and sets IsLit to true or false

@@ -111,12 +111,16 @@ public class PlayerInteractor : MonoBehaviour
 
         HeldItem = item;
         item.AttachTo(holdPoint);
+        AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.pickup);
         promptDirty = true;
         OnHeldItemChanged?.Invoke(HeldItem);
     }
 
     private void Release(Vector3 velocity)
     {
+        Vector3 pos = HeldItem.transform.position;
+        AudioManager.Instance.PlaySfxAt(AudioManager.Instance.sounds.throwObj, pos);
+
         HeldItem.Release(velocity);
         HeldItem = null;
         promptDirty = true;

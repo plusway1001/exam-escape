@@ -18,6 +18,7 @@ namespace Nicholas
         public override void Interact(Inventory inv)
         {
             inv.Add(item);
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.pickup);
             onPickedUp.Invoke();
             Destroy(gameObject);
         }
