@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Caijie
 {
     // goes on the root of each of the 9 coloured wall buttons.
-    // pressing E on it fires Pressed, and SequencePuzzle checks if it was the right one.
+    // pressing E to ress, and SequencePuzzle checks if it was the right one.
     // the colour comes from UVRevealable, the movement from ButtonPressAnimation on the cap.
     [RequireComponent(typeof(UVRevealable))]
     public class ButtonSequence : MonoBehaviour, IInteractable
@@ -16,7 +16,7 @@ namespace Caijie
         // can be left empty, the button still works, it just won't move
         [SerializeField] private ButtonPressAnimation pressAnimation;
 
-        [SerializeField] private Sprite prompt;   // the "E | Press button" image
+        [SerializeField] private Sprite prompt;   // the "E  Press button" image
 
         public UVRevealable Revealable { get; private set; }
         public bool Locked { get; set; }
@@ -36,11 +36,11 @@ namespace Caijie
             if (pressAnimation != null)
                 pressAnimation.Click();
 
-            // tell the puzzle. if it was correct, the puzzle holds the button down straight after.
+            // if it was the correct button in order, the puzzle holds the button down straight after.
             Pressed?.Invoke(this);
         }
 
-        // the puzzle calls this: true = stay pushed in (correct), false = pop back out (after a mistake)
+        // true = stay pushed in (correct), false = pop back out (after a mistake)
         public void SetHeldDown(bool held)
         {
             if (pressAnimation != null)
