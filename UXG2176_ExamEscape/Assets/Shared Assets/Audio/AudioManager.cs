@@ -11,6 +11,9 @@ public class AudioManager : MonoBehaviour
     private AudioSource sfxSource;
     private AudioSource loopSource;
 
+    private AudioSource[] spatialPool;
+    private int nextSpatial;
+
     [SerializeField] private float bgmVolume;
 
     private void Awake()
@@ -39,6 +42,8 @@ public class AudioManager : MonoBehaviour
         {
             PlayBgm(sounds.bgm);
         }
+
+        CreateSpatialPool();
     }
 
     public void PlayBgm(AudioClip clip)
@@ -63,20 +68,19 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySfxAt(AudioClip clip, Vector3 position, float minDistance = 2f, float maxDistance = 15f)
     {
-        if (clip == null) return;
+        if (clip == null)
+        {
+            return;
+        }
 
-        GameObject go = new GameObject("SFX_3D");
-        go.transform.position = position;
+        AudioSource src = spatialPool[nextSpatial];
+        nextSpatial = (nextSpatial + 1) % spatialPool.Length;
 
-        AudioSource src = go.AddComponent<AudioSource>();
-        src.clip = clip;
-        src.spatialBlend = 1f;
-        src.rolloffMode = AudioRolloffMode.Linear;
+        src.transform.position = position;
         src.minDistance = minDistance;
         src.maxDistance = maxDistance;
+        src.clip = clip;
         src.Play();
-
-        Destroy(go, clip.length + 0.1f);
     }
 
     public void PlayLoop(AudioClip clip)
@@ -100,5 +104,20 @@ public class AudioManager : MonoBehaviour
     public void SetLoopPitch(float pitch)
     {
         loopSource.pitch = pitch;
+    }
+
+    private void CreateSpatialPool(int size = 8)
+    {
+        spatialPool = new AudioSource[size];
+        for (int i = 0; i < size; i++)
+        {
+            var child = new GameObject("SFX_3D_" + i);
+            child.transform.SetParent(transform);
+            var src = child.AddComponent<AudioSource>();
+            src.playOnAwake = false;
+            src.spatialBlend = 1f;
+            src.rolloffMode = AudioRolloffMode.Linear;
+            spatialPool[i] = src;
+        }
     }
 }

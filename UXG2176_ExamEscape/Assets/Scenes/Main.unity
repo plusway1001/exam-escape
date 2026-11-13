@@ -149,7 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EscapeRoom.AudioManager
   sounds: {fileID: 11400000, guid: f428cc91cd3fda640af7410ed5352409, type: 2}
-  bgmVolume: 0.5
+  bgmVolume: 0.25
 --- !u!4 &89338347
 Transform:
   m_ObjectHideFlags: 0
