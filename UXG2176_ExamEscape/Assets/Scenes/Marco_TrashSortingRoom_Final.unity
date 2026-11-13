@@ -662,7 +662,7 @@ MonoBehaviour:
   Lens:
     FieldOfView: 60
     OrthographicSize: 5
-    NearClipPlane: 0.3
+    NearClipPlane: 0.01
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
@@ -777,7 +777,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -4117,9 +4117,6 @@ MonoBehaviour:
   puzzle: {fileID: 1080410414}
   ejectPoint: {fileID: 1945922201}
   ejectSpeed: 4
-  audioSource: {fileID: 0}
-  correctClip: {fileID: 0}
-  wrongClip: {fileID: 0}
 --- !u!65 &1227985067
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4986,9 +4983,6 @@ MonoBehaviour:
   puzzle: {fileID: 1080410414}
   ejectPoint: {fileID: 1698147853}
   ejectSpeed: 4
-  audioSource: {fileID: 0}
-  correctClip: {fileID: 0}
-  wrongClip: {fileID: 0}
 --- !u!65 &1636734095
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6763,9 +6757,6 @@ MonoBehaviour:
   puzzle: {fileID: 1080410414}
   ejectPoint: {fileID: 1734741775}
   ejectSpeed: 4
-  audioSource: {fileID: 0}
-  correctClip: {fileID: 0}
-  wrongClip: {fileID: 0}
 --- !u!65 &2011042259
 BoxCollider:
   m_ObjectHideFlags: 0

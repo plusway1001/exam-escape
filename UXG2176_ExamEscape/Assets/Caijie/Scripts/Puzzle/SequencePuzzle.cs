@@ -121,7 +121,10 @@ namespace Caijie
             List<UVRevealable> found = new List<UVRevealable>();
             found.Add(wrongButton.Revealable);
             for (int i = 0; i < step; i++)
+            {
                 found.Add(sequence[i].Revealable);
+            }
+            AudioManager.Instance.PlaySfx(AudioManager.Instance.sounds.wrong);
 
             // make the wait once and reuse it, instead of creating a new one every blink
             WaitForSeconds wait = new WaitForSeconds(blinkInterval);
