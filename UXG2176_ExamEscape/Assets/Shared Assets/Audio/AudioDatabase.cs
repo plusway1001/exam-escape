@@ -19,6 +19,7 @@ public class AudioDatabase : ScriptableObject
     public AudioClip wrong;
     public AudioClip correct;
     public AudioClip flashlightBtn;
+    public AudioClip btnPress;
     public AudioClip laserPowered;
     public AudioClip laserUnpowered;
     public AudioClip mirrorTurn;

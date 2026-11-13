@@ -42,6 +42,8 @@ namespace Caijie
             if (pressAnimation != null)
                 pressAnimation.Click();
 
+            AudioManager.Instance.PlaySfxAt(AudioManager.Instance.sounds.btnPress, transform.position);
+
             // if it was the correct button in order, the puzzle holds the button down straight after.
             Pressed?.Invoke(this);
         }
