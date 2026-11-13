@@ -12,11 +12,13 @@ namespace Caijie
 
         // true once the player has turned the torch on, so the tip never comes back
         private bool tipDone;
+        public static bool IsShowing { get; private set; }
 
         private void Awake()
         {
             // hidden until the torch is picked up
             tipGroup.alpha = 0f;
+            IsShowing = false;
         }
 
         // listen to the torch's static events
@@ -30,12 +32,14 @@ namespace Caijie
         {
             UVFlashlight.Equipped -= HandleEquipped;
             UVFlashlight.Toggled -= HandleToggled;
+            IsShowing = false;
         }
 
         // the torch was just picked up, and it's still off
         private void HandleEquipped()
         {
             tipGroup.alpha = 1f;
+            IsShowing = true;
         }
 
         private void HandleToggled(bool on)
@@ -58,6 +62,7 @@ namespace Caijie
             }
 
             tipGroup.alpha = 0f;
+            IsShowing = false;
         }
     }
 }
